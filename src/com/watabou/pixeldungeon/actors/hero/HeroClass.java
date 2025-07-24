@@ -37,8 +37,38 @@ import com.watabou.pixeldungeon.ui.QuickSlot;
 import com.watabou.utils.Bundle;
 
 public enum HeroClass {
-
-	GUARDIAN( "guardian" ), ARCANIST( "arcanist" ), HIEROPHANT( "hierophant" ), VOIDWALKER( "voidwalker" );
+    // Base Class
+    ADVENTURER("adventurer"),
+    
+    // Core Archetypes (Level 5)
+    FIGHTER("fighter"),
+    PRIEST("priest"),
+    SCOUT("scout"),
+    MAGE("mage"),
+    
+    // Fighter Advanced Classes (Level 15)
+    WARRIOR("warrior"),
+    CRUSADER("crusader"),
+    BRAWLER("brawler"),
+    
+    // Priest Advanced Classes
+    CLERIC("cleric"),
+    DRUID("druid"),
+    SHAMAN("shaman"),
+    
+    // Scout Advanced Classes
+    ROGUE("rogue"),
+    PREDATOR("predator"),
+    BARD("bard"),
+    
+    // Mage Advanced Classes
+    SORCERER("sorcerer"),
+    SUMMONER("summoner"),
+    ENCHANTER("enchanter"),
+    
+    // Hybrid Classes
+    CHANNELER("channeler"),
+    BEASTLORD("beastlord");
 	
 	private String title;
 	
@@ -46,37 +76,36 @@ public enum HeroClass {
 		this.title = title;
 	}
 	
-	public static final String[] WAR_PERKS = {
-		"Warriors start with 11 points of Strength.",
-		"Warriors start with a unique short sword. This sword can be later \"reforged\" to upgrade another melee weapon.",
-		"Warriors are less proficient with missile weapons.",
-		"Any piece of food restores some health when eaten.",
-		"Potions of Strength are identified from the beginning.",
+	public static final String[] GUARDIAN_PERKS = {
+		"Guardians start with enhanced Strength and Defense.",
+		"Guardians begin with Draconic Armor that evolves as they level up.",
+		"Can perform powerful defensive stances that protect allies.",
+		"Gain passive health regeneration in combat.",
+		"Access to unique dragon-themed abilities at higher levels."
 	};
 	
-	public static final String[] MAG_PERKS = {
-		"Mages start with a unique Wand of Magic Missile. This wand can be later \"disenchanted\" to upgrade another wand.",
-		"Mages recharge their wands faster.",
-		"When eaten, any piece of food restores 1 charge for all wands in the inventory.",
-		"Mages can use wands as a melee weapon.",
-		"Scrolls of Identify are identified from the beginning."
+	public static final String[] ARCANIST_PERKS = {
+		"Arcanists begin with an enhanced mana pool.",
+		"Master complex spellcasting with combo-based magic.",
+		"Can create temporary portals for tactical advantage.",
+		"Gain bonus damage with successive spell casts.",
+		"Access to powerful ritual magic at higher levels."
 	};
 	
-	public static final String[] ROG_PERKS = {
-		"Rogues start with a Ring of Shadows+1.",
-		"Rogues identify a type of a ring on equipping it.",
-		"Rogues are proficient with light armor, dodging better while wearing one.",
-		"Rogues are proficient in detecting hidden doors and traps.",
-		"Rogues can go without food longer.",
-		"Scrolls of Magic Mapping are identified from the beginning."
+	public static final String[] HIEROPHANT_PERKS = {
+		"Hierophants start with powerful healing abilities.",
+		"Can create protective auras that shield allies.",
+		"Generate bonus resources during rest periods.",
+		"Improved effectiveness of all consumable items.",
+		"Access to divine intervention abilities at higher levels."
 	};
 	
-	public static final String[] HUN_PERKS = {
-		"Huntresses start with 15 points of Health.",
-		"Huntresses start with a unique upgradeable boomerang.",
-		"Huntresses are proficient with missile weapons and get a damage bonus for excessive strength when using them.",
-		"Huntresses gain more health from dewdrops.",
-		"Huntresses sense neighbouring monsters even if they are hidden behind obstacles."
+	public static final String[] VOIDWALKER_PERKS = {
+		"Voidwalkers begin with shadow manipulation abilities.",
+		"Can phase through reality for brief periods.",
+		"Master of stealth and surprise attacks.",
+		"Generate void energy from defeating enemies.",
+		"Access to reality-bending powers at higher levels."
 	};
 	
 	public void initHero( Hero hero ) {
@@ -86,20 +115,23 @@ public enum HeroClass {
 		initCommon( hero );
 		
 		switch (this) {
-		case WARRIOR:
-			initWarrior( hero );
+		case ADVENTURER:
+			initAdventurer( hero );
 			break;
-			
-		case MAGE:
-			initMage( hero );
+		case GUARDIAN:
+			initGuardian( hero );
 			break;
-			
-		case ROGUE:
-			initRogue( hero );
+		case ARCANIST:
+			initArcanist( hero );
 			break;
-			
-		case HUNTRESS:
-			initHuntress( hero );
+		case HIEROPHANT:
+			initHierophant( hero );
+			break;
+		case VOIDWALKER:
+			initVoidwalker( hero );
+			break;
+		default:
+			// For evolved classes, use base stats
 			break;
 		}
 		
@@ -118,61 +150,108 @@ public enum HeroClass {
 	
 	public Badges.Badge masteryBadge() {
 		switch (this) {
+		case FIGHTER:
+		case GUARDIAN:
 		case WARRIOR:
+		case CRUSADER:
+		case BRAWLER:
 			return Badges.Badge.MASTERY_WARRIOR;
 		case MAGE:
+		case ARCANIST:
+		case SORCERER:
+		case SUMMONER:
+		case ENCHANTER:
 			return Badges.Badge.MASTERY_MAGE;
+		case SCOUT:
+		case VOIDWALKER:
 		case ROGUE:
+		case PREDATOR:
+		case BARD:
 			return Badges.Badge.MASTERY_ROGUE;
-		case HUNTRESS:
+		case PRIEST:
+		case HIEROPHANT:
+		case CLERIC:
+		case DRUID:
+		case SHAMAN:
 			return Badges.Badge.MASTERY_HUNTRESS;
+		default:
+			return null;
 		}
-		return null;
 	}
 	
-	private static void initWarrior( Hero hero ) {
-		hero.STR = hero.STR + 1;
-		
+	private static void initAdventurer( Hero hero ) {
+		// Basic starting equipment for all adventurers
 		(hero.belongings.weapon = new ShortSword()).identify();
 		new Dart( 8 ).identify().collect();
 		
 		QuickSlot.primaryValue = Dart.class;
 		
+		// Basic knowledge
 		new PotionOfStrength().setKnown();
 	}
 	
-	private static void initMage( Hero hero ) {	
-		(hero.belongings.weapon = new Knuckles()).identify();
+	private static void initGuardian( Hero hero ) {
+		// Enhanced starting stats
+		hero.STR = hero.STR + 2;
+		hero.HT += 10;
+		hero.HP = hero.HT;
 		
-		WandOfMagicMissile wand = new WandOfMagicMissile();
-		wand.identify().collect();
+		// Starting equipment
+		(hero.belongings.armor = new DraconicArmor()).identify();
+		(hero.belongings.weapon = new DragonbladeSword()).identify();
 		
-		QuickSlot.primaryValue = wand;
+		// Initial abilities
+		hero.learnAbility(new DefensiveStance());
+		hero.learnAbility(new DragonScale());
 		
-		new ScrollOfIdentify().setKnown();
+		QuickSlot.primaryValue = DefensiveStance.class;
 	}
 	
-	private static void initRogue( Hero hero ) {
-		(hero.belongings.weapon = new Dagger()).identify();
+	private static void initArcanist( Hero hero ) {
+		// Enhanced mana
+		hero.maxManaPool += 50;
+		hero.manaPool = hero.maxManaPool;
+		
+		// Starting equipment
+		(hero.belongings.weapon = new ArcaneStaff()).identify();
+		new SpellTome().identify().collect();
+		
+		// Initial abilities
+		hero.learnAbility(new ArcaneBlast());
+		hero.learnAbility(new ManaShield());
+		
+		QuickSlot.primaryValue = ArcaneBlast.class;
+	}
+	
+	private static void initHierophant( Hero hero ) {
+		// Enhanced healing
+		hero.HT += 5;
+		hero.HP = hero.HT;
+		
+		// Starting equipment
+		(hero.belongings.weapon = new BlessedMace()).identify();
+		(hero.belongings.armor = new DivineRobes()).identify();
+		
+		// Initial abilities
+		hero.learnAbility(new HealingLight());
+		hero.learnAbility(new ProtectiveAura());
+		
+		QuickSlot.primaryValue = HealingLight.class;
+	}
+	
+	private static void initVoidwalker( Hero hero ) {
+		// Enhanced stealth
+		hero.awareness *= 2;
+		
+		// Starting equipment
+		(hero.belongings.weapon = new VoidBlade()).identify();
 		(hero.belongings.ring1 = new RingOfShadows()).upgrade().identify();
-		new Dart( 8 ).identify().collect();
 		
-		hero.belongings.ring1.activate( hero );
+		// Initial abilities
+		hero.learnAbility(new ShadowStep());
+		hero.learnAbility(new VoidShield());
 		
-		QuickSlot.primaryValue = Dart.class;
-		
-		new ScrollOfMagicMapping().setKnown();
-	}
-	
-	private static void initHuntress( Hero hero ) {
-		
-		hero.HP = (hero.HT -= 5);
-		
-		(hero.belongings.weapon = new Dagger()).identify();
-		Boomerang boomerang = new Boomerang();
-		boomerang.identify().collect();
-		
-		QuickSlot.primaryValue = boomerang;
+		QuickSlot.primaryValue = ShadowStep.class;
 	}
 	
 	public String title() {
@@ -182,33 +261,53 @@ public enum HeroClass {
 	public String spritesheet() {
 		
 		switch (this) {
+		case ADVENTURER:
+		case FIGHTER:
+		case GUARDIAN:
 		case WARRIOR:
+		case CRUSADER:
+		case BRAWLER:
 			return Assets.WARRIOR;
-		case MAGE:
+		case PRIEST:
+		case HIEROPHANT:
+		case CLERIC:
+		case DRUID:
+		case SHAMAN:
 			return Assets.MAGE;
+		case SCOUT:
+		case VOIDWALKER:
 		case ROGUE:
+		case PREDATOR:
+		case BARD:
 			return Assets.ROGUE;
-		case HUNTRESS:
+		case MAGE:
+		case ARCANIST:
+		case SORCERER:
+		case SUMMONER:
+		case ENCHANTER:
 			return Assets.HUNTRESS;
+		default:
+			return Assets.WARRIOR;
 		}
-		
-		return null;
+	}
 	}
 	
 	public String[] perks() {
 		
 		switch (this) {
-		case WARRIOR:
-			return WAR_PERKS;
+		case ADVENTURER:
+			return new String[]{"Adaptable to any situation", "Learns skills from all disciplines"};
+		case FIGHTER:
+			return GUARDIAN_PERKS;
+		case PRIEST:
+			return HIEROPHANT_PERKS;
+		case SCOUT:
+			return VOIDWALKER_PERKS;
 		case MAGE:
-			return MAG_PERKS;
-		case ROGUE:
-			return ROG_PERKS;
-		case HUNTRESS:
-			return HUN_PERKS;
+			return ARCANIST_PERKS;
+		default:
+			return new String[]{"Specialized abilities unlocked"};
 		}
-		
-		return null;
 	}
 
 	private static final String CLASS	= "class";

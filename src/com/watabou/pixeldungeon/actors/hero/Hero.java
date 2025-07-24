@@ -32,6 +32,8 @@ import com.watabou.pixeldungeon.GamesInProgress;
 import com.watabou.pixeldungeon.ResultDescriptions;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.actors.abilities.Ability;
+import com.watabou.pixeldungeon.actors.mobs.Companion;
 import com.watabou.pixeldungeon.actors.buffs.Barkskin;
 import com.watabou.pixeldungeon.actors.buffs.Bleeding;
 import com.watabou.pixeldungeon.actors.buffs.Blindness;
@@ -111,12 +113,180 @@ import com.watabou.utils.Random;
 
 public class Hero extends Char {
 	
-	private static final String TXT_LEAVE = "One does not simply leave Pixel Dungeon.";
+	// Advanced class progression methods
+	private void evolveToArchetype() {
+		// Analyze metrics to determine archetype
+		int fighter = metrics.meleeActions + metrics.tankingActions;
+		int priest = metrics.healingActions + metrics.supportActions;
+		int scout = metrics.stealthActions + metrics.explorationActions;
+		int mage = metrics.spellActions + metrics.controlActions;
+		
+		// Find dominant playstyle
+		int max = Math.max(Math.max(fighter, priest), Math.max(scout, mage));
+		
+		// Assign archetype
+		if (max == fighter) {
+			heroClass = HeroClass.FIGHTER;
+			GLog.p(TXT_ARCHETYPE_UNLOCK, "Fighter");
+		} else if (max == priest) {
+			heroClass = HeroClass.PRIEST;
+			GLog.p(TXT_ARCHETYPE_UNLOCK, "Priest");
+		} else if (max == scout) {
+			heroClass = HeroClass.SCOUT;
+			GLog.p(TXT_ARCHETYPE_UNLOCK, "Scout");
+		} else {
+			heroClass = HeroClass.MAGE;
+			GLog.p(TXT_ARCHETYPE_UNLOCK, "Mage");
+		}
+		
+		// Reset metrics for next evolution
+		metrics = new ActionMetrics();
+	}
+	
+	private void evolveToAdvancedClass() {
+		switch (heroClass) {
+			case FIGHTER:
+				if (metrics.tankingActions > metrics.meleeActions) {
+					heroClass = HeroClass.WARRIOR;
+					GLog.p(TXT_CLASS_UNLOCK, "Warrior");
+				} else if (metrics.spellActions > metrics.healingActions) {
+					heroClass = HeroClass.CRUSADER;
+					GLog.p(TXT_CLASS_UNLOCK, "Crusader");
+				} else {
+					heroClass = HeroClass.BRAWLER;
+					GLog.p(TXT_CLASS_UNLOCK, "Brawler");
+				}
+				break;
+				
+			case PRIEST:
+				if (metrics.healingActions > metrics.supportActions) {
+					heroClass = HeroClass.CLERIC;
+					GLog.p(TXT_CLASS_UNLOCK, "Cleric");
+				} else if (metrics.explorationActions > metrics.controlActions) {
+					heroClass = HeroClass.DRUID;
+					GLog.p(TXT_CLASS_UNLOCK, "Druid");
+				} else {
+					heroClass = HeroClass.SHAMAN;
+					GLog.p(TXT_CLASS_UNLOCK, "Shaman");
+				}
+				break;
+				
+			case SCOUT:
+				if (metrics.stealthActions > metrics.explorationActions) {
+					heroClass = HeroClass.ROGUE;
+					GLog.p(TXT_CLASS_UNLOCK, "Rogue");
+				} else if (metrics.meleeActions > metrics.supportActions) {
+					heroClass = HeroClass.PREDATOR;
+					GLog.p(TXT_CLASS_UNLOCK, "Predator");
+				} else {
+					heroClass = HeroClass.BARD;
+					GLog.p(TXT_CLASS_UNLOCK, "Bard");
+				}
+				break;
+				
+			case MAGE:
+				if (metrics.spellActions > metrics.controlActions) {
+					heroClass = HeroClass.SORCERER;
+					GLog.p(TXT_CLASS_UNLOCK, "Sorcerer");
+				} else if (metrics.supportActions > metrics.healingActions) {
+					heroClass = HeroClass.SUMMONER;
+					GLog.p(TXT_CLASS_UNLOCK, "Summoner");
+				} else {
+					heroClass = HeroClass.ENCHANTER;
+					GLog.p(TXT_CLASS_UNLOCK, "Enchanter");
+				}
+				break;
+		}
+		
+		// Reset metrics for specialization
+		metrics = new ActionMetrics();
+	}
+	
+	private void evolveToSpecialization() {
+		// Determine specialization based on refined playstyle metrics
+		switch (heroClass) {
+			case WARRIOR:
+				subClass = (metrics.tankingActions > metrics.meleeActions) ? 
+					HeroSubClass.GUARDIAN : HeroSubClass.BERSERKER;
+				break;
+			case CRUSADER:
+				subClass = (metrics.healingActions > metrics.spellActions) ?
+					HeroSubClass.PALADIN : HeroSubClass.SHADOWKNIGHT;
+				break;
+			case BRAWLER:
+				subClass = (metrics.controlActions > metrics.meleeActions) ?
+					HeroSubClass.MONK : HeroSubClass.BRUISER;
+				break;
+			// ... Additional specialization logic for other classes
+		}
+		
+		GLog.p(TXT_SPECIALIZATION_UNLOCK, subClass.title());
+	}
+	
+	private void applyClassBonuses() {
+		switch (heroClass) {
+			case FIGHTER:
+				HT += 2;
+				HP += 2;
+				attackSkill++;
+				break;
+			case PRIEST:
+				maxManaPool += 5;
+				manaPool += 5;
+				break;
+			case SCOUT:
+				defenseSkill++;
+				break;
+			case MAGE:
+				maxManaPool += 3;
+				manaPool += 3;
+				spellPower++;
+				break;
+		}
+	}
+
+	// Class progression metrics
+	protected static class ActionMetrics {
+		public int meleeActions;
+		public int spellActions;
+		public int healingActions;
+		public int stealthActions;
+		public int tankingActions;
+		public int explorationActions;
+		public int supportActions;
+		public int controlActions;
+		
+		public void track(String actionType, int value) {
+			switch(actionType) {
+				case "melee": meleeActions += value; break;
+				case "spell": spellActions += value; break;
+				case "heal": healingActions += value; break;
+				case "stealth": stealthActions += value; break;
+				case "tank": tankingActions += value; break;
+				case "explore": explorationActions += value; break;
+				case "support": supportActions += value; break;
+				case "control": controlActions += value; break;
+			}
+		}
+	}
+	
+	private ActionMetrics metrics = new ActionMetrics();
+	private static final String TXT_LEAVE = "Your journey in NeverQuest continues...";
 	
 	private static final String TXT_LEVEL_UP = "level up!";
 	private static final String TXT_NEW_LEVEL = 
-		"Welcome to level %d! Now you are healthier and more focused. " +
-		"It's easier for you to hit enemies and dodge their attacks.";
+		"Welcome to level %d! Your power grows as you progress. " +
+		"Your actions and choices shape your destiny.";
+		
+	private static final String TXT_ARCHETYPE_UNLOCK = 
+		"Your actions have revealed your true calling! " +
+		"You have been chosen by the path of the %s.";
+		
+	private static final String TXT_CLASS_UNLOCK = 
+		"Your mastery deepens! You have evolved into a %s.";
+		
+	private static final String TXT_SPECIALIZATION_UNLOCK = 
+		"Your unique style manifests! You now walk the path of the %s.";
 	
 	public static final String TXT_YOU_NOW_HAVE	= "You now have %s";
 	
@@ -136,9 +306,11 @@ public class Hero extends Char {
 	public HeroClass heroClass = HeroClass.ROGUE;
 	public HeroSubClass subClass = HeroSubClass.NONE;
 	
-	private int attackSkill = 10;
-	private int defenseSkill = 5;
-	
+	// Four Pillars of Hollowroot Vale
+	public int durability = 12;   // D.A.D. - Durability (health, defense, physical resilience)
+	public int mysticism = 10;    // M.A.D. - Mysticism (mana, spell power, magical defense)
+	public int skill = 10;        // S.A.D. - Skill (accuracy, evasion, critical, stealth)
+	public int presence = 10;     // P.A.D. - Presence (charisma, awareness, companion power)
 
 	public boolean ready = false;
 
@@ -156,13 +328,33 @@ public class Hero extends Char {
 	public MissileWeapon rangedWeapon = null;
 	public Belongings belongings;
 	
-	public int STR;
 	public boolean weakened = false;
-	
 	public float awareness;
 	
 	public int lvl = 1;
 	public int exp = 0;
+	
+	// Resource pools
+	public int manaPool = 50;
+	public int maxManaPool = 50;
+	public int staminaPool = 100;
+	public int maxStaminaPool = 100;
+	
+	// Companion system
+	public Companion activeCompanion;
+	public int companionLevel = 1;
+	
+	// Ability system
+	private ArrayList<Ability> abilities = new ArrayList<Ability>();
+	
+	public void learnAbility(Ability ability) {
+		abilities.add(ability);
+		GLog.p("You have learned " + ability.name() + "!");
+	}
+	
+	public ArrayList<Ability> getAbilities() {
+		return abilities;
+	}
 	
 	private ArrayList<Mob> visibleEnemies; 
 	
@@ -170,43 +362,42 @@ public class Hero extends Char {
 		super();
 		name = "you";
 		
-		// Enhanced base stats for N3v3rQu3st
-		HP = HT = 30;
-		STR = STARTING_STR + 2;
+		// Four Pillars base values
+		durability = 12;
+		mysticism = 10;
+		skill = 10;
+		presence = 10;
+
+		// Derived stats
+		HP = HT = durability * 3;
+		manaPool = maxManaPool = mysticism * 5;
+		staminaPool = maxStaminaPool = skill * 10;
 		awareness = 0.2f;
-		
+
 		// Initialize advanced systems
 		belongings = new Belongings( this );
-		visibleEnemies = new ArrayList<Mob>();
-		
-		// Initialize class-specific resources
-		manaPool = maxManaPool = 100;
-		staminaPool = maxStaminaPool = 100;
-		
+		visibleEnemies = new ArrayList<>();
+
 		// Initialize companion system
 		activeCompanion = null;
 		companionLevel = 1;
+
+		// Initialize abilities
+		abilities = new ArrayList<>();
 	}
 	
 	// Advanced resource systems
-	private int manaPool;
-	private int maxManaPool;
-	private int staminaPool;
-	private int maxStaminaPool;
-	
-	// Companion system
-	private Companion activeCompanion;
-	private int companionLevel;
 
 	public int STR() {
-		return weakened ? STR - 2 : STR;
+		return weakened ? durability - 2 : durability;
 	}
 
-	private static final String ATTACK		= "attackSkill";
-	private static final String DEFENSE		= "defenseSkill";
-	private static final String STRENGTH	= "STR";
-	private static final String LEVEL		= "lvl";
-	private static final String EXPERIENCE	= "exp";
+private static final String DURABILITY  = "durability";
+private static final String MYSTICISM   = "mysticism";
+private static final String SKILL       = "skill";
+private static final String PRESENCE    = "presence";
+private static final String LEVEL       = "lvl";
+private static final String EXPERIENCE  = "exp";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -214,14 +405,24 @@ public class Hero extends Char {
 		
 		heroClass.storeInBundle( bundle );
 		subClass.storeInBundle( bundle );
-		
-		bundle.put( ATTACK, attackSkill );
-		bundle.put( DEFENSE, defenseSkill );
-		
-		bundle.put( STRENGTH, STR );
-		
+
+		bundle.put( DURABILITY, durability );
+		bundle.put( MYSTICISM, mysticism );
+		bundle.put( SKILL, skill );
+		bundle.put( PRESENCE, presence );
+
 		bundle.put( LEVEL, lvl );
 		bundle.put( EXPERIENCE, exp );
+		
+		// Store progression metrics
+		bundle.put( "meleeActions", metrics.meleeActions );
+		bundle.put( "spellActions", metrics.spellActions );
+		bundle.put( "healingActions", metrics.healingActions );
+		bundle.put( "stealthActions", metrics.stealthActions );
+		bundle.put( "tankingActions", metrics.tankingActions );
+		bundle.put( "explorationActions", metrics.explorationActions );
+		bundle.put( "supportActions", metrics.supportActions );
+		bundle.put( "controlActions", metrics.controlActions );
 		
 		belongings.storeInBundle( bundle );
 	}
@@ -233,14 +434,24 @@ public class Hero extends Char {
 		heroClass = HeroClass.restoreInBundle( bundle );
 		subClass = HeroSubClass.restoreInBundle( bundle );
 		
-		attackSkill = bundle.getInt( ATTACK );
-		defenseSkill = bundle.getInt( DEFENSE );
-		
-		STR = bundle.getInt( STRENGTH );
-		updateAwareness();
+
+		durability = bundle.getInt( DURABILITY );
+		mysticism = bundle.getInt( MYSTICISM );
+		skill = bundle.getInt( SKILL );
+		presence = bundle.getInt( PRESENCE );
 		
 		lvl = bundle.getInt( LEVEL );
 		exp = bundle.getInt( EXPERIENCE );
+		
+		// Restore progression metrics
+		metrics.meleeActions = bundle.getInt("meleeActions");
+		metrics.spellActions = bundle.getInt("spellActions");
+		metrics.healingActions = bundle.getInt("healingActions");
+		metrics.stealthActions = bundle.getInt("stealthActions");
+		metrics.tankingActions = bundle.getInt("tankingActions");
+		metrics.explorationActions = bundle.getInt("explorationActions");
+		metrics.supportActions = bundle.getInt("supportActions");
+		metrics.controlActions = bundle.getInt("controlActions");
 		
 		belongings.restoreFromBundle( bundle );
 	}
@@ -285,9 +496,9 @@ public class Hero extends Char {
 		
 		KindOfWeapon wep = rangedWeapon != null ? rangedWeapon : belongings.weapon;
 		if (wep != null) {
-			return (int)(attackSkill * accuracy * wep.acuracyFactor( this ));
+			return (int)(skill * accuracy * wep.acuracyFactor( this ));
 		} else {
-			return (int)(attackSkill * accuracy);
+			return (int)(skill * accuracy);
 		}
 	}
 	
@@ -306,7 +517,7 @@ public class Hero extends Char {
 		int aEnc = belongings.armor != null ? belongings.armor.STR - STR() : 0;
 		
 		if (aEnc > 0) {
-			return (int)(defenseSkill * evasion / Math.pow( 1.5, aEnc ));
+			return (int)(durability * evasion / Math.pow( 1.5, aEnc ));
 		} else {
 			
 			if (heroClass == HeroClass.ROGUE) {
@@ -315,9 +526,9 @@ public class Hero extends Char {
 					evasion *= 2;
 				}
 				
-				return (int)((defenseSkill - aEnc) * evasion);
+				return (int)((durability - aEnc) * evasion);
 			} else {
-				return (int)(defenseSkill * evasion);
+				return (int)(durability * evasion);
 			}
 		}
 	}
@@ -339,7 +550,7 @@ public class Hero extends Char {
 		if (wep != null) {	
 			dmg = wep.damageRoll( this );
 		} else {
-			dmg = STR() > 10 ? Random.IntRange( 1, STR() - 9 ) : 1;
+			dmg = durability > 10 ? Random.IntRange( 1, durability - 9 ) : 1;
 		}
 		return buff( Fury.class ) != null ? (int)(dmg * 1.5f) : dmg;
 	}
@@ -383,23 +594,29 @@ public class Hero extends Char {
 	public void spendAndNext( float time ) {
 		busy();
 		spend( time );
-		next();
-	}
-	
-	@Override
-	public boolean act() {
-		
-		super.act();
-		
-		if (paralysed) {
-			
-			curAction = null;
-			
-			spendAndNext( TICK );
-			return false;
-		}
-		
-		checkVisibleMobs();
+		super();
+		name = "you";
+		// Four Pillars base values
+		durability = 12;
+		mysticism = 10;
+		skill = 10;
+		presence = 10;
+
+		// Derived stats
+		HP = HT = durability * 3;
+		manaPool = maxManaPool = mysticism * 5;
+		staminaPool = maxStaminaPool = skill * 10;
+
+		// Initialize advanced systems
+		belongings = new Belongings( this );
+		visibleEnemies = new ArrayList<Mob>();
+
+		// Initialize companion system
+		activeCompanion = null;
+		companionLevel = 1;
+
+		// Initialize abilities
+		abilities = new ArrayList<Ability>();
 		AttackIndicator.updateState();
 		
 		if (curAction == null) {
@@ -824,16 +1041,24 @@ public class Hero extends Char {
 	public int attackProc( Char enemy, int damage ) {
 		KindOfWeapon wep = rangedWeapon != null ? rangedWeapon : belongings.weapon;
 		if (wep != null) {
-			
 			wep.proc( this, enemy, damage );
 			
+			// Track combat actions for class progression
+			if (rangedWeapon != null) {
+				metrics.track("ranged", 1);
+			} else if (wep instanceof MeleeWeapon) {
+				metrics.track("melee", 1);
+			} else if (wep instanceof Wand) {
+				metrics.track("spell", 1);
+			}
+			
 			switch (subClass) {
-			case GLADIATOR:
+			case DRAKESTRIKE_GUARDIAN:
 				if (wep instanceof MeleeWeapon) {
 					damage += Buff.affect( this, Combo.class ).hit( enemy, damage );
 				}
 				break;
-			case BATTLEMAGE:
+			case ABYSSAL_VOIDWALKER:
 				if (wep instanceof Wand) {
 					Wand wand = (Wand)wep;
 					if (wand.curCharges >= wand.maxCharges) {
@@ -889,7 +1114,7 @@ public class Hero extends Char {
 		restoreHealth = false;
 		super.damage( dmg, src );
 		
-		if (subClass == HeroSubClass.BERSERKER && 0 < HP && HP <= HT * Fury.LEVEL) {
+		if (subClass == HeroSubClass.ASSASSIN && 0 < HP && HP <= HT * Fury.LEVEL) {
 			Buff.affect( this, Fury.class );
 		}
 	}
@@ -1044,31 +1269,39 @@ public class Hero extends Char {
 			this.exp -= maxExp();
 			lvl++;
 			
-			// Enhanced stat progression
-			HT += 8;
-			HP += 8;
-			attackSkill += 2;
-			defenseSkill += 2;
-			
-			// Resource pools expansion
-			maxManaPool += 10;
+			// Four Pillars progression
+			durability += 2;
+			mysticism += 2;
+			skill += 2;
+			presence += 2;
+
+			// Update derived stats
+			HT = durability * 3;
+			HP = HT;
+			maxManaPool = mysticism * 5;
 			manaPool = maxManaPool;
-			maxStaminaPool += 10;
+			maxStaminaPool = skill * 10;
 			staminaPool = maxStaminaPool;
-			
-			// Class-specific bonuses
+
+			// Class-specific pillar bonuses
 			if (heroClass == HeroClass.GUARDIAN) {
-				HT += 2;
-				HP += 2;
+				durability += 2;
 			} else if (heroClass == HeroClass.ARCANIST) {
-				maxManaPool += 5;
-				manaPool += 5;
+				mysticism += 2;
 			} else if (heroClass == HeroClass.HIEROPHANT) {
-				defenseSkill++;
+				presence += 2;
 			} else if (heroClass == HeroClass.VOIDWALKER) {
-				attackSkill++;
+				skill += 2;
 			}
-			
+
+			// Update derived stats again after class bonus
+			HT = durability * 3;
+			HP = HT;
+			maxManaPool = mysticism * 5;
+			manaPool = maxManaPool;
+			maxStaminaPool = skill * 10;
+			staminaPool = maxStaminaPool;
+
 			// Companion progression
 			if (activeCompanion != null && lvl % 3 == 0) {
 				companionLevel++;
@@ -1087,7 +1320,7 @@ public class Hero extends Char {
 			Badges.validateLevelReached();
 		}
 		
-		if (subClass == HeroSubClass.WARLOCK) {
+		if (subClass == HeroSubClass.WARDEN) {
 			
 			int value = Math.min( HT - HP, 1 + (Dungeon.depth - 1) / 5 );
 			if (value > 0) {
