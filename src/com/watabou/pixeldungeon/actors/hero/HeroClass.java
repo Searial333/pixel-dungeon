@@ -38,7 +38,7 @@ import com.watabou.utils.Bundle;
 
 public enum HeroClass {
 
-	WARRIOR( "warrior" ), MAGE( "mage" ), ROGUE( "rogue" ), HUNTRESS( "huntress" );
+	GUARDIAN( "guardian" ), ARCANIST( "arcanist" ), HIEROPHANT( "hierophant" ), VOIDWALKER( "voidwalker" );
 	
 	private String title;
 	

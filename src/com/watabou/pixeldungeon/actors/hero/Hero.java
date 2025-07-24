@@ -170,14 +170,33 @@ public class Hero extends Char {
 		super();
 		name = "you";
 		
-		HP = HT = 20;
-		STR = STARTING_STR;
-		awareness = 0.1f;
+		// Enhanced base stats for N3v3rQu3st
+		HP = HT = 30;
+		STR = STARTING_STR + 2;
+		awareness = 0.2f;
 		
+		// Initialize advanced systems
 		belongings = new Belongings( this );
-		
 		visibleEnemies = new ArrayList<Mob>();
+		
+		// Initialize class-specific resources
+		manaPool = maxManaPool = 100;
+		staminaPool = maxStaminaPool = 100;
+		
+		// Initialize companion system
+		activeCompanion = null;
+		companionLevel = 1;
 	}
+	
+	// Advanced resource systems
+	private int manaPool;
+	private int maxManaPool;
+	private int staminaPool;
+	private int maxStaminaPool;
+	
+	// Companion system
+	private Companion activeCompanion;
+	private int companionLevel;
 
 	public int STR() {
 		return weakened ? STR - 2 : STR;
@@ -1025,21 +1044,43 @@ public class Hero extends Char {
 			this.exp -= maxExp();
 			lvl++;
 			
-			HT += 5;
-			HP += 5;			
-			attackSkill++;
-			defenseSkill++;
+			// Enhanced stat progression
+			HT += 8;
+			HP += 8;
+			attackSkill += 2;
+			defenseSkill += 2;
 			
-			if (lvl < 10) {
-				updateAwareness();
+			// Resource pools expansion
+			maxManaPool += 10;
+			manaPool = maxManaPool;
+			maxStaminaPool += 10;
+			staminaPool = maxStaminaPool;
+			
+			// Class-specific bonuses
+			if (heroClass == HeroClass.GUARDIAN) {
+				HT += 2;
+				HP += 2;
+			} else if (heroClass == HeroClass.ARCANIST) {
+				maxManaPool += 5;
+				manaPool += 5;
+			} else if (heroClass == HeroClass.HIEROPHANT) {
+				defenseSkill++;
+			} else if (heroClass == HeroClass.VOIDWALKER) {
+				attackSkill++;
 			}
 			
+			// Companion progression
+			if (activeCompanion != null && lvl % 3 == 0) {
+				companionLevel++;
+				GLog.p("Your companion grows stronger!");
+			}
+			
+			updateAwareness();
 			levelUp = true;
 		}
 		
 		if (levelUp) {
-			
-			GLog.p( TXT_NEW_LEVEL, lvl );
+			GLog.p( "Welcome to level %d! Your power grows substantially!", lvl );
 			sprite.showStatus( CharSprite.POSITIVE, TXT_LEVEL_UP );
 			Sample.INSTANCE.play( Assets.SND_LEVELUP );
 			

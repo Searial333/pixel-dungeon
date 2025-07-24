@@ -23,19 +23,25 @@ public enum HeroSubClass {
 
 	NONE( null, null ),
 	
-	GLADIATOR( "gladiator", 
-		"A successful attack with a melee weapon allows the _Gladiator_ to start a combo, " +
-		"in which every next successful hit inflicts more damage." ),
-	BERSERKER( "berserker", 
-		"When severely wounded, the _Berserker_ enters a state of wild fury " +
-		"significantly increasing his damage output." ),
-	
-	WARLOCK( "warlock", 
-		"After killing an enemy the _Warlock_ consumes its soul. " +
-		"It heals his wounds and satisfies his hunger." ),
-	BATTLEMAGE( "battlemage", 
-		"When fighting with a wand in his hands, the _Battlemage_ inflicts additional damage depending " +
-		"on the current number of charges. Every successful hit restores 1 charge to this wand." ),
+	DRAKESTRIKE_GUARDIAN( "drakestrike", 
+		"The _Drakestrike Guardian_ channels ancient draconic power, gaining the ability to " +
+		"imbue attacks with elemental energy and perform limited flight maneuvers. Mastery of " + 
+		"dragon lore grants them unique aerial combat capabilities." ),
+		
+	ABYSSAL_VOIDWALKER( "voidwalker", 
+		"The _Abyssal Voidwalker_ manipulates space and reality itself, " +
+		"gaining powers of short-range teleportation and gravity manipulation. " +
+		"Can phase temporarily out of reality for defensive purposes." ),
+		
+	CANTOR_TEMPLAR( "cantor-templar", 
+		"The _Cantor-Templar_ combines Hierophant healing with Guardian defensive abilities, " +
+		"becoming a powerful front-line support tank. Can create protective auras " +
+		"while maintaining significant martial prowess." ),
+		
+	ASSASSIN_MONK( "assassin-monk", 
+		"The _Assassin-Monk_ blends stealth and martial arts mastery, " +
+		"excelling at both single-target elimination and crowd control. " +
+		"Gains enhanced mobility and critical strike capabilities." ),
 	
 	ASSASSIN( "assassin", 
 		"When performing a surprise attack, the _Assassin_ inflicts additional damage to his target." ),
