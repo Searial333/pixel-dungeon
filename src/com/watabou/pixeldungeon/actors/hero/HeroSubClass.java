@@ -54,7 +54,15 @@ public enum HeroSubClass {
 		"effectively ignoring it when using a missile weapon." ),
 	WARDEN( "warden", 
 		"Having a strong connection with forces of nature gives _Wardens_ an ability to gather dewdrops and " +
-		"seeds from plants. Also trampling a high grass grants them a temporary armor buff." );
+		"seeds from plants. Also trampling a high grass grants them a temporary armor buff." ),
+		
+	// Additional constants for compatibility
+	PALADIN( "paladin", "A holy warrior with defensive abilities." ),
+	SHADOWKNIGHT( "shadowknight", "A dark warrior with shadow magic." ),
+	GUARDIAN( "guardian", "A defensive specialist." ),
+	BERSERKER( "berserker", "A frenzied warrior." ),
+	MONK( "monk", "A martial artist." ),
+	BRUISER( "bruiser", "A heavy combat specialist." );
 	
 	private String title;
 	private String desc;
