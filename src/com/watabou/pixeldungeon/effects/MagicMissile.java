@@ -20,8 +20,9 @@ package com.watabou.pixeldungeon.effects;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.noosa.particles.PixelParticle;
-import com.watabou.noosa.particles.PixelParticle.Shrinking;
+// import com.watabou.noosa.particles.PixelParticle;
+// import com.watabou.noosa.particles.PixelParticle.Shrinking;
+import com.watabou.pixeldungeon.effects.particles.PixelParticle;
 import com.watabou.pixeldungeon.DungeonTilemap;
 import com.watabou.pixeldungeon.effects.particles.FlameParticle;
 import com.watabou.pixeldungeon.effects.particles.LeafParticle;
@@ -326,6 +327,7 @@ public class MagicMissile extends Emitter {
 	}
 	
 	public static class ForceParticle extends Shrinking {
+	public static class ForceParticle extends PixelParticle {
 		
 		public static final Emitter.Factory FACTORY = new Factory() {	
 			@Override
@@ -335,8 +337,13 @@ public class MagicMissile extends Emitter {
 		};
 		
 		public void reset( int index, float x, float y ) {
-			super.reset( x, y, 0xFFFFFF, 8, 0.5f );
-			
+			revive();
+			this.x = x;
+			this.y = y;
+			color(0xFFFFFF);
+			size(8);
+			lifespan = 0.5f;
+			left = lifespan;
 			speed.polar( PointF.PI2 / 8 * index, 12 );
 			this.x -= speed.x * lifespan;
 			this.y -= speed.y * lifespan;
@@ -345,13 +352,12 @@ public class MagicMissile extends Emitter {
 		@Override
 		public void update() {
 			super.update();
-			
 			am = (1 - left / lifespan) / 2;
+			size(8 * (left / lifespan));
 		}
 	}
 	
-	public static class ColdParticle extends PixelParticle.Shrinking {
-		
+	public static class ColdParticle extends PixelParticle {
 		public static final Emitter.Factory FACTORY = new Factory() {	
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {

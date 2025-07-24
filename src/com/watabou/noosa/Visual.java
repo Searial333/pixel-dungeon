@@ -3,11 +3,14 @@ package com.watabou.noosa;
 public class Visual {
     public Group parent;
     
-    public Object emitter() {
-        return new Object() {
-            public Object burst(Object factory, int count) {
-                return null;
-            }
-        };
+    public Emitter emitter() {
+        return new Emitter();
+    }
+    
+    public static class Emitter {
+        public Object burst(Object factory, int count) {
+            System.out.println("Emitter burst: " + count + " particles");
+            return null;
+        }
     }
 }

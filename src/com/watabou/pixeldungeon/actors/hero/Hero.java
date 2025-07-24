@@ -17,10 +17,6 @@
  */
 package com.watabou.pixeldungeon.actors.hero;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
@@ -33,12 +29,12 @@ import com.watabou.pixeldungeon.ResultDescriptions;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.abilities.Ability;
-import com.watabou.pixeldungeon.actors.mobs.Companion;
 import com.watabou.pixeldungeon.actors.buffs.Barkskin;
 import com.watabou.pixeldungeon.actors.buffs.Bleeding;
 import com.watabou.pixeldungeon.actors.buffs.Blindness;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
+import com.watabou.pixeldungeon.actors.buffs.Charm;
 import com.watabou.pixeldungeon.actors.buffs.Combo;
 import com.watabou.pixeldungeon.actors.buffs.Cripple;
 import com.watabou.pixeldungeon.actors.buffs.Fury;
@@ -51,10 +47,10 @@ import com.watabou.pixeldungeon.actors.buffs.Paralysis;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.actors.buffs.Regeneration;
 import com.watabou.pixeldungeon.actors.buffs.Roots;
-import com.watabou.pixeldungeon.actors.buffs.Charm;
 import com.watabou.pixeldungeon.actors.buffs.SnipersMark;
 import com.watabou.pixeldungeon.actors.buffs.Vertigo;
 import com.watabou.pixeldungeon.actors.buffs.Weakness;
+import com.watabou.pixeldungeon.actors.mobs.Companion;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 import com.watabou.pixeldungeon.actors.mobs.npcs.NPC;
 import com.watabou.pixeldungeon.effects.CheckedCell;
@@ -70,9 +66,9 @@ import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.KindOfWeapon;
 import com.watabou.pixeldungeon.items.armor.Armor;
 import com.watabou.pixeldungeon.items.keys.GoldenKey;
+import com.watabou.pixeldungeon.items.keys.IronKey;
 import com.watabou.pixeldungeon.items.keys.Key;
 import com.watabou.pixeldungeon.items.keys.SkeletonKey;
-import com.watabou.pixeldungeon.items.keys.IronKey;
 import com.watabou.pixeldungeon.items.potions.Potion;
 import com.watabou.pixeldungeon.items.potions.PotionOfMight;
 import com.watabou.pixeldungeon.items.potions.PotionOfStrength;
@@ -84,10 +80,10 @@ import com.watabou.pixeldungeon.items.rings.RingOfHaste;
 import com.watabou.pixeldungeon.items.rings.RingOfShadows;
 import com.watabou.pixeldungeon.items.rings.RingOfThorns;
 import com.watabou.pixeldungeon.items.scrolls.Scroll;
+import com.watabou.pixeldungeon.items.scrolls.ScrollOfEnchantment;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfUpgrade;
-import com.watabou.pixeldungeon.items.scrolls.ScrollOfEnchantment;
 import com.watabou.pixeldungeon.items.wands.Wand;
 import com.watabou.pixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.watabou.pixeldungeon.items.weapon.missiles.MissileWeapon;
@@ -110,141 +106,12 @@ import com.watabou.pixeldungeon.windows.WndResurrect;
 import com.watabou.pixeldungeon.windows.WndTradeItem;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 
 public class Hero extends Char {
 	
-	// Advanced class progression methods
-	private void evolveToArchetype() {
-		// Analyze metrics to determine archetype
-		int fighter = metrics.meleeActions + metrics.tankingActions;
-		int priest = metrics.healingActions + metrics.supportActions;
-		int scout = metrics.stealthActions + metrics.explorationActions;
-		int mage = metrics.spellActions + metrics.controlActions;
-		
-		// Find dominant playstyle
-		int max = Math.max(Math.max(fighter, priest), Math.max(scout, mage));
-		
-		// Assign archetype
-		if (max == fighter) {
-			heroClass = HeroClass.FIGHTER;
-			GLog.p(TXT_ARCHETYPE_UNLOCK, "Fighter");
-		} else if (max == priest) {
-			heroClass = HeroClass.PRIEST;
-			GLog.p(TXT_ARCHETYPE_UNLOCK, "Priest");
-		} else if (max == scout) {
-			heroClass = HeroClass.SCOUT;
-			GLog.p(TXT_ARCHETYPE_UNLOCK, "Scout");
-		} else {
-			heroClass = HeroClass.MAGE;
-			GLog.p(TXT_ARCHETYPE_UNLOCK, "Mage");
-		}
-		
-		// Reset metrics for next evolution
-		metrics = new ActionMetrics();
-	}
-	
-	private void evolveToAdvancedClass() {
-		switch (heroClass) {
-			case FIGHTER:
-				if (metrics.tankingActions > metrics.meleeActions) {
-					heroClass = HeroClass.WARRIOR;
-					GLog.p(TXT_CLASS_UNLOCK, "Warrior");
-				} else if (metrics.spellActions > metrics.healingActions) {
-					heroClass = HeroClass.CRUSADER;
-					GLog.p(TXT_CLASS_UNLOCK, "Crusader");
-				} else {
-					heroClass = HeroClass.BRAWLER;
-					GLog.p(TXT_CLASS_UNLOCK, "Brawler");
-				}
-				break;
-				
-			case PRIEST:
-				if (metrics.healingActions > metrics.supportActions) {
-					heroClass = HeroClass.CLERIC;
-					GLog.p(TXT_CLASS_UNLOCK, "Cleric");
-				} else if (metrics.explorationActions > metrics.controlActions) {
-					heroClass = HeroClass.DRUID;
-					GLog.p(TXT_CLASS_UNLOCK, "Druid");
-				} else {
-					heroClass = HeroClass.SHAMAN;
-					GLog.p(TXT_CLASS_UNLOCK, "Shaman");
-				}
-				break;
-				
-			case SCOUT:
-				if (metrics.stealthActions > metrics.explorationActions) {
-					heroClass = HeroClass.ROGUE;
-					GLog.p(TXT_CLASS_UNLOCK, "Rogue");
-				} else if (metrics.meleeActions > metrics.supportActions) {
-					heroClass = HeroClass.PREDATOR;
-					GLog.p(TXT_CLASS_UNLOCK, "Predator");
-				} else {
-					heroClass = HeroClass.BARD;
-					GLog.p(TXT_CLASS_UNLOCK, "Bard");
-				}
-				break;
-				
-			case MAGE:
-				if (metrics.spellActions > metrics.controlActions) {
-					heroClass = HeroClass.SORCERER;
-					GLog.p(TXT_CLASS_UNLOCK, "Sorcerer");
-				} else if (metrics.supportActions > metrics.healingActions) {
-					heroClass = HeroClass.SUMMONER;
-					GLog.p(TXT_CLASS_UNLOCK, "Summoner");
-				} else {
-					heroClass = HeroClass.ENCHANTER;
-					GLog.p(TXT_CLASS_UNLOCK, "Enchanter");
-				}
-				break;
-		}
-		
-		// Reset metrics for specialization
-		metrics = new ActionMetrics();
-	}
-	
-	private void evolveToSpecialization() {
-		// Determine specialization based on refined playstyle metrics
-		switch (heroClass) {
-			case WARRIOR:
-				subClass = (metrics.tankingActions > metrics.meleeActions) ? 
-					HeroSubClass.GUARDIAN : HeroSubClass.BERSERKER;
-				break;
-			case CRUSADER:
-				subClass = (metrics.healingActions > metrics.spellActions) ?
-					HeroSubClass.PALADIN : HeroSubClass.SHADOWKNIGHT;
-				break;
-			case BRAWLER:
-				subClass = (metrics.controlActions > metrics.meleeActions) ?
-					HeroSubClass.MONK : HeroSubClass.BRUISER;
-				break;
-			// ... Additional specialization logic for other classes
-		}
-		
-		GLog.p(TXT_SPECIALIZATION_UNLOCK, subClass.title());
-	}
-	
-	private void applyClassBonuses() {
-		switch (heroClass) {
-			case FIGHTER:
-				HT += 2;
-				HP += 2;
-				attackSkill++;
-				break;
-			case PRIEST:
-				maxManaPool += 5;
-				manaPool += 5;
-				break;
-			case SCOUT:
-				defenseSkill++;
-				break;
-			case MAGE:
-				maxManaPool += 3;
-				manaPool += 3;
-				spellPower++;
-				break;
-		}
-	}
-
 	// Class progression metrics
 	protected static class ActionMetrics {
 		public int meleeActions;
@@ -258,35 +125,26 @@ public class Hero extends Char {
 		
 		public void track(String actionType, int value) {
 			switch(actionType) {
-				case "melee": meleeActions += value; break;
-				case "spell": spellActions += value; break;
-				case "heal": healingActions += value; break;
-				case "stealth": stealthActions += value; break;
-				case "tank": tankingActions += value; break;
-				case "explore": explorationActions += value; break;
-				case "support": supportActions += value; break;
-				case "control": controlActions += value; break;
+				case "melee" -> meleeActions += value;
+				case "spell" -> spellActions += value;
+				case "heal" -> healingActions += value;
+				case "stealth" -> stealthActions += value;
+				case "tank" -> tankingActions += value;
+				case "explore" -> explorationActions += value;
+				case "support" -> supportActions += value;
+				case "control" -> controlActions += value;
 			}
 		}
 	}
 	
 	private ActionMetrics metrics = new ActionMetrics();
+	
+	public void trackMetric(String actionType, int value) {
+		metrics.track(actionType, value);
+	}
 	private static final String TXT_LEAVE = "Your journey in NeverQuest continues...";
 	
 	private static final String TXT_LEVEL_UP = "level up!";
-	private static final String TXT_NEW_LEVEL = 
-		"Welcome to level %d! Your power grows as you progress. " +
-		"Your actions and choices shape your destiny.";
-		
-	private static final String TXT_ARCHETYPE_UNLOCK = 
-		"Your actions have revealed your true calling! " +
-		"You have been chosen by the path of the %s.";
-		
-	private static final String TXT_CLASS_UNLOCK = 
-		"Your mastery deepens! You have evolved into a %s.";
-		
-	private static final String TXT_SPECIALIZATION_UNLOCK = 
-		"Your unique style manifests! You now walk the path of the %s.";
 	
 	public static final String TXT_YOU_NOW_HAVE	= "You now have %s";
 	
@@ -314,6 +172,8 @@ public class Hero extends Char {
 	
 	// Additional stats
 	public int spellPower = 0;    // Magic amplification
+	public int defenseSkill = 0;  // Additional defense
+	public int attackSkill = 0;   // Additional attack bonus
 
 	public boolean ready = false;
 
@@ -348,7 +208,7 @@ public class Hero extends Char {
 	public int companionLevel = 1;
 	
 	// Ability system
-	private ArrayList<Ability> abilities = new ArrayList<Ability>();
+	private ArrayList<Ability> abilities = new ArrayList<>();
 	
 	public void learnAbility(Ability ability) {
 		abilities.add(ability);
@@ -406,8 +266,10 @@ private static final String EXPERIENCE  = "exp";
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		
-		heroClass.storeInBundle( bundle );
-		subClass.storeInBundle( bundle );
+		bundle.put( "heroClass", heroClass.name() );
+		if (subClass != null) {
+			bundle.put( "subClass", subClass.name() );
+		}
 
 		bundle.put( DURABILITY, durability );
 		bundle.put( MYSTICISM, mysticism );
@@ -434,8 +296,13 @@ private static final String EXPERIENCE  = "exp";
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		
-		heroClass = HeroClass.restoreInBundle( bundle );
-		subClass = HeroSubClass.restoreInBundle( bundle );
+		String heroClassName = bundle.getString( "heroClass" );
+		heroClass = HeroClass.valueOf( heroClassName );
+		
+		String subClassName = bundle.getString( "subClass" );
+		if (subClassName != null && !subClassName.isEmpty()) {
+			// subClass = HeroSubClass.valueOf( subClassName );
+		}
 		
 
 		durability = bundle.getInt( DURABILITY );
@@ -597,29 +464,13 @@ private static final String EXPERIENCE  = "exp";
 	public void spendAndNext( float time ) {
 		busy();
 		spend( time );
-		super();
-		name = "you";
-		// Four Pillars base values
-		durability = 12;
-		mysticism = 10;
-		skill = 10;
-		presence = 10;
-
-		// Derived stats
-		HP = HT = durability * 3;
-		manaPool = maxManaPool = mysticism * 5;
-		staminaPool = maxStaminaPool = skill * 10;
-
-		// Initialize advanced systems
-		belongings = new Belongings( this );
-		visibleEnemies = new ArrayList<Mob>();
-
-		// Initialize companion system
-		activeCompanion = null;
-		companionLevel = 1;
-
-		// Initialize abilities
-		abilities = new ArrayList<Ability>();
+		next();
+	}
+	
+	@Override
+	protected boolean act() {
+		super.act();
+		
 		AttackIndicator.updateState();
 		
 		if (curAction == null) {
@@ -1056,12 +907,12 @@ private static final String EXPERIENCE  = "exp";
 			}
 			
 			switch (subClass) {
-			case DRAKESTRIKE_GUARDIAN:
+			case DRAKESTRIKE_GUARDIAN -> {
 				if (wep instanceof MeleeWeapon) {
 					damage += Buff.affect( this, Combo.class ).hit( enemy, damage );
 				}
-				break;
-			case ABYSSAL_VOIDWALKER:
+			}
+			case ABYSSAL_VOIDWALKER -> {
 				if (wep instanceof Wand) {
 					Wand wand = (Wand)wep;
 					if (wand.curCharges >= wand.maxCharges) {
@@ -1077,12 +928,14 @@ private static final String EXPERIENCE  = "exp";
 					}
 					damage += wand.curCharges;
 				}
-			case SNIPER:
+			}
+			case SNIPER -> {
 				if (rangedWeapon != null) {
 					Buff.prolong( this, SnipersMark.class, attackDelay() * 1.1f ).object = enemy.id();
 				}
-				break;
-			default:
+			}
+			default -> {
+			}
 			}
 		}
 		
@@ -1123,7 +976,7 @@ private static final String EXPERIENCE  = "exp";
 	}
 	
 	private void checkVisibleMobs() {
-		ArrayList<Mob> visible = new ArrayList<Mob>();
+		ArrayList<Mob> visible = new ArrayList<>();
 		
 		boolean newMob = false;
 		
@@ -1287,14 +1140,11 @@ private static final String EXPERIENCE  = "exp";
 			staminaPool = maxStaminaPool;
 
 			// Class-specific pillar bonuses
-			if (heroClass == HeroClass.GUARDIAN) {
-				durability += 2;
-			} else if (heroClass == HeroClass.ARCANIST) {
-				mysticism += 2;
-			} else if (heroClass == HeroClass.HIEROPHANT) {
-				presence += 2;
-			} else if (heroClass == HeroClass.VOIDWALKER) {
-				skill += 2;
+			switch (heroClass) {
+				case WARRIOR -> durability += 2;
+				case MAGE -> mysticism += 2;
+				case ROGUE -> skill += 2;
+				case HUNTRESS -> presence += 2;
 			}
 
 			// Update derived stats again after class bonus
@@ -1470,7 +1320,7 @@ private static final String EXPERIENCE  = "exp";
 		
 		int pos = Dungeon.hero.pos;
 		
-		ArrayList<Integer> passable = new ArrayList<Integer>();
+		ArrayList<Integer> passable = new ArrayList<>();
 		for (Integer ofs : Level.NEIGHBOURS8) {
 			int cell = pos + ofs;
 			if ((Level.passable[cell] || Level.avoid[cell]) && Dungeon.level.heaps.get( cell ) == null) {
@@ -1479,7 +1329,7 @@ private static final String EXPERIENCE  = "exp";
 		}
 		Collections.shuffle( passable );
 		
-		ArrayList<Item> items = new ArrayList<Item>( Dungeon.hero.belongings.backpack.items );
+		ArrayList<Item> items = new ArrayList<>( Dungeon.hero.belongings.backpack.items );
 		for (Integer cell : passable) {
 			if (items.isEmpty()) {
 				break;

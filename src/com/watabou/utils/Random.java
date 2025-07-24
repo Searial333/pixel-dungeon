@@ -3,10 +3,18 @@ package com.watabou.utils;
 import java.util.List;
 
 public class Random {
-    private static java.util.Random r = new java.util.Random();
+    private static final java.util.Random r = new java.util.Random();
     
     public static int IntRange(int min, int max) {
         return min + r.nextInt(max - min + 1);
+    }
+    
+    public static int Int(int max) {
+        return r.nextInt(max);
+    }
+    
+    public static int Int(int min, int max) {
+        return IntRange(min, max - 1);
     }
     
     public static float Float() {

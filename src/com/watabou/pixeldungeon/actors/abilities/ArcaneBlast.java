@@ -51,25 +51,27 @@ public class ArcaneBlast extends Ability {
 		MagicMissile.blueLight(hero.sprite.parent, hero.pos, cell, new Callback() {
 			@Override
 			public void call() {
-				onZap(cell);
+				onZap(cell, hero);
 			}
 		});
 		
 		// Track action for class progression
-		hero.metrics.track("spell", 1);
+		hero.trackMetric("spell", 1);
 		
 		return true;
 	}
 	
-	private void onZap(int cell) {
+	private void onZap(int cell, Hero hero) {
 		Char ch = Actor.findChar(cell);
 		if (ch != null) {
-			int damage = Random.Int(8, 16);
+			// Damage scales with mysticism (Four Pillars system)
+			int baseDamage = 6 + (hero.mysticism / 2);
+			int damage = Random.Int(baseDamage, baseDamage + 8);
 			ch.damage(damage, this);
 			ch.sprite.emitter().burst(SparkParticle.FACTORY, 5);
 			
-			// Chain to nearby enemies
-			if (Random.Int(3) == 0) {
+			// Chain to nearby enemies with mysticism-based chance
+			if (Random.Int(4 - (hero.mysticism / 5)) == 0) {
 				chainToNearby(ch, damage / 2);
 			}
 		}

@@ -86,6 +86,7 @@ public abstract class Char extends Actor {
 	public boolean rooted		= false;
 	public boolean flying		= false;
 	public int invisible		= 0;
+	public boolean hostile		= false;
 	
 	public int viewDistance	= 8;
 	
@@ -211,8 +212,8 @@ public abstract class Char extends Actor {
 	}
 	
 	public static boolean hit( Char attacker, Char defender, boolean magic ) {
-		float acuRoll = Random.Float( attacker.attackSkill( defender ) );
-		float defRoll = Random.Float( defender.defenseSkill( attacker ) );
+		float acuRoll = Random.Float() * attacker.attackSkill( defender );
+		float defRoll = Random.Float() * defender.defenseSkill( attacker );
 		return (magic ? acuRoll * 2 : acuRoll) >= defRoll;
 	}
 	

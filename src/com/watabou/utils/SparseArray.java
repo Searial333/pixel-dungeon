@@ -1,9 +1,9 @@
 package com.watabou.utils;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SparseArray<T> {
     private Map<Integer, T> data = new HashMap<>();
@@ -40,5 +40,13 @@ public class SparseArray<T> {
     
     public void clear() {
         data.clear();
+    }
+    
+    public int[] keyArray() {
+        return data.keySet().stream().mapToInt(Integer::intValue).toArray();
+    }
+    
+    public boolean containsKey(int key) {
+        return data.containsKey(key);
     }
 }
