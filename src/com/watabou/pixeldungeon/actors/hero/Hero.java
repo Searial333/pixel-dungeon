@@ -311,6 +311,9 @@ public class Hero extends Char {
 	public int mysticism = 10;    // M.A.D. - Mysticism (mana, spell power, magical defense)
 	public int skill = 10;        // S.A.D. - Skill (accuracy, evasion, critical, stealth)
 	public int presence = 10;     // P.A.D. - Presence (charisma, awareness, companion power)
+	
+	// Additional stats
+	public int spellPower = 0;    // Magic amplification
 
 	public boolean ready = false;
 
