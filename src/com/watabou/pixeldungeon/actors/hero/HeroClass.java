@@ -1,88 +1,107 @@
 package com.watabou.pixeldungeon.actors.hero;
 
+/**
+ * HeroClass - EverQuest II class archetypes
+ *
+ * In EverQuest II, all adventurers begin as one of four archetypes,
+ * later specializing into specific subclasses as they gain experience.
+ */
 public enum HeroClass {
-    WARRIOR("warrior"),
+    FIGHTER("fighter"),
+    PRIEST("priest"),
     MAGE("mage"),
-    ROGUE("rogue"),
-    HUNTRESS("huntress");
-    
+    SCOUT("scout");
+
     private final String title;
-    
+
     HeroClass(String title) {
         this.title = title;
     }
-    
+
     public String title() {
         return title;
     }
-    
+
     public String[] perks() {
         return switch (this) {
-            case WARRIOR -> new String[]{
-                "Warriors start with 11 points of Strength.",
-                "Warriors start with a unique short sword. This sword can be later \"reforged\" to upgrade another melee weapon.",
-                "Warriors are less proficient with missile weapons.",
-                "Any piece of food restores some health when eaten.",
-                "Potions of Strength are identified from the beginning."
+            case FIGHTER -> new String[]{
+                "Fighters are masters of melee combat and heavy armor.",
+                "Fighters start with high Durability and can withstand tremendous punishment.",
+                "Fighters excel at protecting allies and dealing devastating melee damage.",
+                "Fighters can wear plate armor and use all weapon types.",
+                "Fighters start with increased health and stamina pools.",
+                "Later specializes into: Guardian, Berserker, Monk, Bruiser, Paladin, or Shadowknight"
+            };
+            case PRIEST -> new String[]{
+                "Priests channel divine power to heal allies and smite foes.",
+                "Priests start with high Mysticism and Presence.",
+                "Priests can heal wounds, cure ailments, and bolster their companions.",
+                "Priests wield divine magic effective against undead creatures.",
+                "Priests start with increased mana pool and healing power.",
+                "Later specializes into: Cleric, Druid, Shaman, Templar, Inquisitor, Warden, Fury, Defiler, or Mystic"
             };
             case MAGE -> new String[]{
-                "Mages start with a unique Wand of Magic Missile. This wand can be later \"disenchanted\" to upgrade another wand.",
-                "Mages recharge their wands faster.",
-                "When eaten, any piece of food restores 1 charge for all wands in the inventory.",
-                "Mages can use wands as a melee weapon.",
-                "Scrolls of Identify are identified from the beginning."
+                "Mages command the arcane forces of magic to devastating effect.",
+                "Mages start with exceptional Mysticism but lower Durability.",
+                "Mages wield powerful elemental and arcane spells from range.",
+                "Mages can control the battlefield with crowd control effects.",
+                "Mages start with the largest mana pool and spell power.",
+                "Later specializes into: Wizard, Warlock, Sorcerer, Summoner, Necromancer, Illusionist, or Coercer"
             };
-            case ROGUE -> new String[]{
-                "Rogues start with a Ring of Shadows+1.",
-                "Rogues identify a type of a ring on equipping it.",
-                "Rogues are proficient with light armor, dodging better while wearing one.",
-                "Rogues are proficient in detecting hidden doors and traps.",
-                "Rogues can go without food longer.",
-                "Scrolls of Magic Mapping are identified from the beginning."
-            };
-            case HUNTRESS -> new String[]{
-                "Huntresses start with 15 points of Health.",
-                "Huntresses start with a unique upgradeable boomerang.",
-                "Huntresses are proficient with missile weapons and get damage bonus for excessive strength when using them.",
-                "Huntresses gain more health from dewdrops.",
-                "Potions of Healing are identified from the beginning."
+            case SCOUT -> new String[]{
+                "Scouts are agile combatants who rely on speed and precision.",
+                "Scouts start with exceptional Skill and good Durability.",
+                "Scouts excel at stealth, critical strikes, and ranged combat.",
+                "Scouts can use bows, daggers, and light weapons with deadly efficiency.",
+                "Scouts start with increased stamina and evasion.",
+                "Later specializes into: Rogue, Predator, Bard, Ranger, Assassin, Swashbuckler, Brigand, Troubadour, Dirge, or Ranger"
             };
         };
     }
-    
+
     public void initHero(Hero hero) {
-        // Set initial Four Pillars stats based on class
+        // Set initial Four Pillars stats based on class archetype
         switch (this) {
-            case WARRIOR -> {
-                hero.fourPillars.dad = 12;
-                hero.fourPillars.sad = 8;
-                hero.fourPillars.mad = 5;
-                hero.fourPillars.pad = 7;
+            case FIGHTER -> {
+                hero.durability = 14;   // D.A.D. - High physical resilience
+                hero.skill = 8;          // S.A.D. - Moderate combat skill
+                hero.mysticism = 5;      // M.A.D. - Low magical aptitude
+                hero.presence = 7;       // P.A.D. - Moderate presence
+                hero.maxStaminaPool = 120;
+                hero.staminaPool = 120;
+            }
+            case PRIEST -> {
+                hero.durability = 8;     // D.A.D. - Moderate durability
+                hero.skill = 6;          // S.A.D. - Lower combat skill
+                hero.mysticism = 14;     // M.A.D. - High divine magic
+                hero.presence = 10;      // P.A.D. - High presence for healing
+                hero.maxManaPool = 80;
+                hero.manaPool = 80;
             }
             case MAGE -> {
-                hero.fourPillars.dad = 6;
-                hero.fourPillars.sad = 8;
-                hero.fourPillars.mad = 14;
-                hero.fourPillars.pad = 6;
+                hero.durability = 6;     // D.A.D. - Low physical resilience
+                hero.skill = 7;          // S.A.D. - Moderate skill
+                hero.mysticism = 16;     // M.A.D. - Exceptional magical power
+                hero.presence = 6;       // P.A.D. - Low presence
+                hero.maxManaPool = 100;
+                hero.manaPool = 100;
             }
-            case ROGUE -> {
-                hero.fourPillars.dad = 8;
-                hero.fourPillars.sad = 14;
-                hero.fourPillars.mad = 6;
-                hero.fourPillars.pad = 6;
-            }
-            case HUNTRESS -> {
-                hero.fourPillars.dad = 10;
-                hero.fourPillars.sad = 12;
-                hero.fourPillars.mad = 6;
-                hero.fourPillars.pad = 6;
+            case SCOUT -> {
+                hero.durability = 10;    // D.A.D. - Good durability
+                hero.skill = 14;         // S.A.D. - Exceptional agility and precision
+                hero.mysticism = 6;      // M.A.D. - Low magic
+                hero.presence = 7;       // P.A.D. - Moderate presence
+                hero.maxStaminaPool = 150;
+                hero.staminaPool = 150;
             }
         }
-        
+
+        // Set starting health based on class
         hero.HT = hero.HP = switch (this) {
-            case WARRIOR -> 20;
-            case HUNTRESS -> 18;
-            case MAGE, ROGUE -> 16;
+            case FIGHTER -> 22;    // Highest health
+            case SCOUT -> 18;      // Good health
+            case PRIEST -> 16;     // Moderate health
+            case MAGE -> 14;       // Lowest health
         };
     }
 }

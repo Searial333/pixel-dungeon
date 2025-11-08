@@ -60,92 +60,100 @@ public class Bestiary {
 	}
 	
 	private static Class<?> mobClass( int depth ) {
-		
+
 		float[] chances;
 		Class<?>[] classes;
-		
+
+		// EverQuest II Themed Spawns by Zone
 		switch (depth) {
+		// ANTONICA / COMMONLANDS (Depths 1-4)
 		case 1:
-			chances = new float[]{ 1 };
-			classes = new Class<?>[]{ Rat.class };
+			chances = new float[]{ 2, 1 };
+			classes = new Class<?>[]{ Kobold.class, Rat.class };
 			break;
 		case 2:
-			chances = new float[]{ 1, 1 };
-			classes = new Class<?>[]{ Rat.class, Gnoll.class };
+			chances = new float[]{ 2, 1, 1 };
+			classes = new Class<?>[]{ Kobold.class, Gnoll.class, Rat.class };
 			break;
 		case 3:
-			chances = new float[]{ 1, 2, 1,   0.02f };
-			classes = new Class<?>[]{ Rat.class, Gnoll.class, Crab.class,   Swarm.class };
+			chances = new float[]{ 2, 2, 1, 1,   0.02f };
+			classes = new Class<?>[]{ Kobold.class, Gnoll.class, Crab.class, Rat.class,   Swarm.class };
 			break;
 		case 4:
-			chances = new float[]{ 1, 2, 3,   0.02f, 0.01f, 0.01f };
-			classes = new Class<?>[]{ Rat.class, Gnoll.class, Crab.class,   Swarm.class, Skeleton.class, Thief.class };
+			chances = new float[]{ 2, 3, 1, 1,   0.02f, 0.01f };
+			classes = new Class<?>[]{ Kobold.class, Gnoll.class, Skeleton.class, Crab.class,   Swarm.class, Thief.class };
 			break;
 			
+		// BOSS: Goo (adapted to EQ2 theme)
 		case 5:
 			chances = new float[]{ 1 };
 			classes = new Class<?>[]{ Goo.class };
 			break;
-			
+
+		// BLACKBURROW / STORMHOLD (Depths 6-9)
 		case 6:
-			chances = new float[]{ 4, 2, 1,   0.2f };
-			classes = new Class<?>[]{ Skeleton.class, Thief.class, Swarm.class,   Shaman.class };
+			chances = new float[]{ 3, 2, 2, 1,   0.2f };
+			classes = new Class<?>[]{ Gnoll.class, Kobold.class, Skeleton.class, Thief.class,   Shaman.class };
 			break;
 		case 7:
-			chances = new float[]{ 3, 1, 1, 1 };
-			classes = new Class<?>[]{ Skeleton.class, Shaman.class, Thief.class, Swarm.class };
+			chances = new float[]{ 3, 2, 2, 1, 1 };
+			classes = new Class<?>[]{ Gnoll.class, Skeleton.class, Kobold.class, Shaman.class, Thief.class };
 			break;
 		case 8:
-			chances = new float[]{ 3, 2, 1, 1, 1,   0.02f };
-			classes = new Class<?>[]{ Skeleton.class, Shaman.class, Gnoll.class, Thief.class, Swarm.class,   Bat.class };
+			chances = new float[]{ 3, 2, 2, 1, 1,   0.02f };
+			classes = new Class<?>[]{ Gnoll.class, Skeleton.class, Shaman.class, Kobold.class, Thief.class,   Bat.class };
 			break;
 		case 9:
-			chances = new float[]{ 3, 3, 1, 1,   0.02f, 0.01f };
-			classes = new Class<?>[]{ Skeleton.class, Shaman.class, Thief.class, Swarm.class,   Bat.class, Brute.class };
+			chances = new float[]{ 3, 3, 2, 1,   0.02f, 0.01f };
+			classes = new Class<?>[]{ Gnoll.class, Skeleton.class, Shaman.class, Thief.class,   Bat.class, Brute.class };
 			break;
 			
+		// BOSS: Tengu (adapted to EQ2 theme)
 		case 10:
 			chances = new float[]{ 1 };
 			classes = new Class<?>[]{ Tengu.class };
 			break;
-			
+
+		// CRUSHBONE / RUNNYEYE (Depths 11-14)
 		case 11:
-			chances = new float[]{ 1,   0.2f };
-			classes = new Class<?>[]{ Bat.class,   Brute.class };
+			chances = new float[]{ 2, 1,   0.2f };
+			classes = new Class<?>[]{ Orc.class, Bat.class,   Brute.class };
 			break;
 		case 12:
-			chances = new float[]{ 1, 1,   0.2f };
-			classes = new Class<?>[]{ Bat.class, Brute.class,   Spinner.class };
+			chances = new float[]{ 2, 1, 1,   0.2f };
+			classes = new Class<?>[]{ Orc.class, Brute.class, Bat.class,   Spinner.class };
 			break;
 		case 13:
-			chances = new float[]{ 1, 3, 1, 1,   0.02f };
-			classes = new Class<?>[]{ Bat.class, Brute.class, Shaman.class, Spinner.class,    Elemental.class };
+			chances = new float[]{ 2, 2, 1, 1, 1,   0.02f };
+			classes = new Class<?>[]{ Orc.class, Brute.class, UndeadKnight.class, Shaman.class, Spinner.class,    Elemental.class };
 			break;
 		case 14:
-			chances = new float[]{ 1, 3, 1, 4,    0.02f, 0.01f };
-			classes = new Class<?>[]{ Bat.class, Brute.class, Shaman.class, Spinner.class,    Elemental.class, Monk.class };
+			chances = new float[]{ 2, 2, 2, 1, 1,    0.02f, 0.01f };
+			classes = new Class<?>[]{ Orc.class, UndeadKnight.class, Brute.class, Spinner.class, Shaman.class,    Elemental.class, Monk.class };
 			break;
 			
+		// BOSS: DM300 (adapted to EQ2 theme)
 		case 15:
 			chances = new float[]{ 1 };
 			classes = new Class<?>[]{ DM300.class };
 			break;
-			
+
+		// LAVASTORM / HIGH-LEVEL ZONES (Depths 16-19)
 		case 16:
-			chances = new float[]{ 1, 1,   0.2f };
-			classes = new Class<?>[]{ Elemental.class, Warlock.class,    Monk.class };
+			chances = new float[]{ 2, 1, 1,   0.2f };
+			classes = new Class<?>[]{ UndeadKnight.class, Elemental.class, Warlock.class,    Monk.class };
 			break;
 		case 17:
-			chances = new float[]{ 1, 1, 1 };
-			classes = new Class<?>[]{ Elemental.class, Monk.class, Warlock.class };
+			chances = new float[]{ 2, 1, 1, 1 };
+			classes = new Class<?>[]{ UndeadKnight.class, Drake.class, Elemental.class, Warlock.class };
 			break;
 		case 18:
-			chances = new float[]{ 1, 2, 1, 1 };
-			classes = new Class<?>[]{ Elemental.class, Monk.class, Golem.class, Warlock.class };
+			chances = new float[]{ 2, 2, 1, 1, 1 };
+			classes = new Class<?>[]{ UndeadKnight.class, Drake.class, Elemental.class, Golem.class, Warlock.class };
 			break;
 		case 19:
-			chances = new float[]{ 1, 2, 3, 1,    0.02f };
-			classes = new Class<?>[]{ Elemental.class, Monk.class, Golem.class, Warlock.class,    Succubus.class };
+			chances = new float[]{ 2, 2, 2, 1, 1,    0.02f };
+			classes = new Class<?>[]{ UndeadKnight.class, Drake.class, Golem.class, Warlock.class, Elemental.class,    Succubus.class };
 			break;
 			
 		case 20:

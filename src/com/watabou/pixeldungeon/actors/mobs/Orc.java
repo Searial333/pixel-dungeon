@@ -1,5 +1,5 @@
 /*
- * Pixel Dungeon
+ * Pixel Dungeon - EverQuest II Edition
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,53 +18,48 @@
 package com.watabou.pixeldungeon.actors.mobs;
 
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Ghost;
 import com.watabou.pixeldungeon.items.Gold;
-import com.watabou.pixeldungeon.sprites.GnollSprite;
+import com.watabou.pixeldungeon.items.food.MysteryMeat;
+import com.watabou.pixeldungeon.sprites.GnollSprite; // Temporary sprite, would need OrcSprite
 import com.watabou.utils.Random;
 
-public class Gnoll extends Mob {
-	
+public class Orc extends Mob {
+
 	{
-		name = "Sabertooth gnoll";
-		spriteClass = GnollSprite.class;
+		name = "Crushbone orc";
+		spriteClass = GnollSprite.class; // TODO: Create OrcSprite
 
-		HP = HT = 14;
-		defenseSkill = 5;
+		HP = HT = 18;
+		defenseSkill = 6;
 
-		EXP = 2;
-		maxLvl = 8;
+		EXP = 3;
+		maxLvl = 10;
 
 		loot = Gold.class;
-		lootChance = 0.5f;
+		lootChance = 0.6f;
 	}
-	
+
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 2, 5 );
+		return Random.NormalIntRange( 3, 7 );
 	}
-	
+
 	@Override
 	public int attackSkill( Char target ) {
-		return 11;
+		return 13;
 	}
-	
+
 	@Override
 	public int dr() {
-		return 2;
+		return 3;
 	}
-	
-	@Override
-	public void die( Object cause ) {
-		Ghost.Quest.processSewersKill( pos );
-		super.die( cause );
-	}
-	
+
 	@Override
 	public String description() {
 		return
-			"The Sabertooth gnolls are savage hyena-like humanoids that have claimed the depths of Blackburrow as their lair. " +
-			"Organized into brutal clans, these gnolls raid the settlements of Qeynos and Antonica, taking slaves and plunder. " +
-			"They worship dark powers and are constantly at war with the neighboring kobolds of Stormhold.";
+			"The orcs of Crushbone are a militant and organized force led by the infamous Emperor Crush. " +
+			"These green-skinned warriors occupy the ruins of Castle Crushbone in the Greater Faydark, " +
+			"where they train for war and plot their conquests. They are formidable foes, skilled in both " +
+			"melee combat and military tactics.";
 	}
 }

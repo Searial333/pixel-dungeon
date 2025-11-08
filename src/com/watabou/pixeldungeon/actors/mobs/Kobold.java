@@ -1,5 +1,5 @@
 /*
- * Pixel Dungeon
+ * Pixel Dungeon - EverQuest II Edition
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,53 +18,46 @@
 package com.watabou.pixeldungeon.actors.mobs;
 
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Ghost;
 import com.watabou.pixeldungeon.items.Gold;
-import com.watabou.pixeldungeon.sprites.GnollSprite;
+import com.watabou.pixeldungeon.sprites.RatSprite; // Temporary sprite
 import com.watabou.utils.Random;
 
-public class Gnoll extends Mob {
-	
+public class Kobold extends Mob {
+
 	{
-		name = "Sabertooth gnoll";
-		spriteClass = GnollSprite.class;
+		name = "Stormhold kobold";
+		spriteClass = RatSprite.class; // TODO: Create KoboldSprite
 
-		HP = HT = 14;
-		defenseSkill = 5;
+		HP = HT = 10;
+		defenseSkill = 4;
 
-		EXP = 2;
-		maxLvl = 8;
+		EXP = 1;
+		maxLvl = 6;
 
 		loot = Gold.class;
-		lootChance = 0.5f;
+		lootChance = 0.4f;
 	}
-	
+
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 2, 5 );
+		return Random.NormalIntRange( 1, 4 );
 	}
-	
+
 	@Override
 	public int attackSkill( Char target ) {
-		return 11;
+		return 10;
 	}
-	
+
 	@Override
 	public int dr() {
-		return 2;
+		return 1;
 	}
-	
-	@Override
-	public void die( Object cause ) {
-		Ghost.Quest.processSewersKill( pos );
-		super.die( cause );
-	}
-	
+
 	@Override
 	public String description() {
 		return
-			"The Sabertooth gnolls are savage hyena-like humanoids that have claimed the depths of Blackburrow as their lair. " +
-			"Organized into brutal clans, these gnolls raid the settlements of Qeynos and Antonica, taking slaves and plunder. " +
-			"They worship dark powers and are constantly at war with the neighboring kobolds of Stormhold.";
+			"Kobolds are small, reptilian humanoids that infest the dungeons of Stormhold and the Commonlands. " +
+			"Cowardly when alone, they become dangerous in packs, overwhelming foes with sheer numbers. " +
+			"They hoard treasure in their warrens and are known for their primitive traps and ambushes.";
 	}
 }
