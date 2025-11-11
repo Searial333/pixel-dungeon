@@ -156,6 +156,17 @@ public enum HeroRace {
         "Draconic warriors with scales and breath weapons, Sarnaks combine strength with magical resistance.",
         2, 1, 0, 0,  // Good Durability and Mysticism
         "Draconic Blood"
+    ),
+
+    // SPECIAL RACES (Can be either alignment)
+
+    FREEBLOOD(
+        "Freeblood",
+        "Vampires who have broken free from the Bloodline curse, Freebloods are undead beings who retain their free will. " +
+        "Neither fully good nor evil, they walk a path between light and shadow, using their vampiric powers to pursue their own goals. " +
+        "Freebloods possess supernatural presence, dark magical aptitude, and predatory instincts, but their undead nature makes them physically fragile.",
+        -1, 2, 1, 3,  // Low Durability, High Mysticism and Presence
+        "Vampiric Essence"
     );
 
     private final String name;
@@ -233,13 +244,26 @@ public enum HeroRace {
      * Check if this race is aligned with Evil (Freeport)
      */
     public boolean isEvilAligned() {
+        if (this == FREEBLOOD) {
+            return false;  // Freeblood are neutral, can choose
+        }
         return !isGoodAligned();
+    }
+
+    /**
+     * Check if this race is neutral (can choose alignment)
+     */
+    public boolean isNeutralAligned() {
+        return this == FREEBLOOD;
     }
 
     /**
      * Get the starting city for this race
      */
     public String getStartingCity() {
+        if (this == FREEBLOOD) {
+            return "Qeynos or Freeport";  // Freeblood can choose
+        }
         return isGoodAligned() ? "Qeynos" : "Freeport";
     }
 

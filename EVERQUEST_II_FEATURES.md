@@ -8,7 +8,7 @@ This customized version of Pixel Dungeon has been transformed into a full-fledge
 
 ## 🧙 Character Creation
 
-### **18 Playable Races**
+### **19 Playable Races**
 
 Choose from the iconic races of Norrath, each with unique stat bonuses:
 
@@ -33,6 +33,15 @@ Choose from the iconic races of Norrath, each with unique stat bonuses:
 - **Ratonga** - Cunning scavengers (+3 Skill)
 - **Arasai** - Corrupted fae (+3 Mysticism, +2 Presence)
 - **Sarnak** - Draconic fighters (+2 Durability, +1 Mysticism)
+
+#### **Neutral Races (Can Choose Alignment)**
+- **Freeblood** - Vampiric undead (−1 Durability, +2 Mysticism, +1 Skill, +3 Presence)
+  * Vampires who broke free from the Bloodline curse
+  * Can start in either Qeynos or Freeport
+  * Supernatural presence and dark magical aptitude
+  * Physically fragile but incredibly charismatic
+  * Walk the path between light and shadow
+  * **Perfect for:** Necromancers, Bards, Shadowknights, or any charisma-based build
 
 ### **4 Class Archetypes**
 
@@ -269,12 +278,20 @@ Explore iconic EverQuest II locations:
 - Deity: Rodcet Nife
 - **Total Mysticism: +7**
 
+### **Vampiric Enchanter** ⭐ NEW!
+- Race: **Freeblood** (vampire)
+- Class: Mage → Illusionist or Scout → Troubadour
+- Deity: Erollisi Marr (for good) or Innoruuk (for evil)
+- **Total Presence: +5 to +6** (highest Presence build!)
+- Perfect for mind control, charm, and bard abilities
+- Combines vampiric charisma with magical/musical power
+
 ---
 
 ## 🌟 Total Customization
 
-**20,736 unique character combinations:**
-- 18 Races
+**21,888 unique character combinations:**
+- 19 Races (including Freeblood vampires!)
 - 4 Archetypes
 - 24 Subclasses
 - 12 Deities
