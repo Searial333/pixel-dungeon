@@ -177,6 +177,7 @@ public class Hero extends Char {
 	public HeroClass heroClass = HeroClass.SCOUT;
 	public HeroSubClass subClass = HeroSubClass.NONE;
 	public HeroRace heroRace = HeroRace.HUMAN;  // EverQuest II race
+	public com.watabou.pixeldungeon.actors.Deity deity = com.watabou.pixeldungeon.actors.Deity.NONE;  // EQ2 deity worship
 
 	// Four Pillars of Hollowroot Vale
 	public int durability = 12;   // D.A.D. - Durability (health, defense, physical resilience)
