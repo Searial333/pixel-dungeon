@@ -38,12 +38,12 @@ public class Skeleton extends Mob {
 	private static final String TXT_HERO_KILLED = "You were killed by the explosion of bones...";
 	
 	{
-		name = "skeleton";
+		name = "risen skeleton";
 		spriteClass = SkeletonSprite.class;
-		
+
 		HP = HT = 25;
 		defenseSkill = 9;
-		
+
 		EXP = 5;
 		maxLvl = 10;
 	}
@@ -112,9 +112,11 @@ public class Skeleton extends Mob {
 	@Override
 	public String description() {
 		return
-			"Skeletons are composed of corpses bones from unlucky adventurers and inhabitants of the dungeon, " +
-			"animated by emanations of evil magic from the depths below. After they have been " +
-			"damaged enough, they disintegrate in an explosion of bones.";
+			"These cursed skeletons are the remains of fallen warriors, raised from their graves by dark necromancy. " +
+			"Common throughout the Commonlands and Thundering Steppes, they serve necromancers and dark powers. " +
+			"The magic animating them is volatile - when they suffer fatal damage, the necrotic energy " +
+			"explodes outward in a shower of bone shrapnel, damaging anything nearby. They are immune to " +
+			"death magic and poison, as they are already dead.";
 	}
 	
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
