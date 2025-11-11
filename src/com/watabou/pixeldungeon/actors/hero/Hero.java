@@ -142,7 +142,20 @@ public class Hero extends Char {
 	public void trackMetric(String actionType, int value) {
 		metrics.track(actionType, value);
 	}
-	private static final String TXT_LEAVE = "Your journey in NeverQuest continues...";
+
+	/**
+	 * Apply racial bonuses from EverQuest II race to the hero's Four Pillars stats
+	 */
+	public void applyRacialBonuses() {
+		if (heroRace != null) {
+			durability += heroRace.getDurabilityBonus();
+			mysticism += heroRace.getMysticismBonus();
+			skill += heroRace.getSkillBonus();
+			presence += heroRace.getPresenceBonus();
+		}
+	}
+
+	private static final String TXT_LEAVE = "Your journey in EverQuest II continues...";
 	
 	private static final String TXT_LEVEL_UP = "level up!";
 	
@@ -161,9 +174,10 @@ public class Hero extends Char {
 	private static final float TIME_TO_REST		= 1f;
 	private static final float TIME_TO_SEARCH	= 2f;
 	
-	public HeroClass heroClass = HeroClass.ROGUE;
+	public HeroClass heroClass = HeroClass.SCOUT;
 	public HeroSubClass subClass = HeroSubClass.NONE;
-	
+	public HeroRace heroRace = HeroRace.HUMAN;  // EverQuest II race
+
 	// Four Pillars of Hollowroot Vale
 	public int durability = 12;   // D.A.D. - Durability (health, defense, physical resilience)
 	public int mysticism = 10;    // M.A.D. - Mysticism (mana, spell power, magical defense)
@@ -270,6 +284,9 @@ private static final String EXPERIENCE  = "exp";
 		if (subClass != null) {
 			bundle.put( "subClass", subClass.name() );
 		}
+		if (heroRace != null) {
+			bundle.put( "heroRace", heroRace.name() );
+		}
 
 		bundle.put( DURABILITY, durability );
 		bundle.put( MYSTICISM, mysticism );
@@ -303,7 +320,15 @@ private static final String EXPERIENCE  = "exp";
 		if (subClassName != null && !subClassName.isEmpty()) {
 			// subClass = HeroSubClass.valueOf( subClassName );
 		}
-		
+
+		String raceClassName = bundle.getString( "heroRace" );
+		if (raceClassName != null && !raceClassName.isEmpty()) {
+			try {
+				heroRace = HeroRace.valueOf( raceClassName );
+			} catch (Exception e) {
+				heroRace = HeroRace.HUMAN;  // Default fallback
+			}
+		}
 
 		durability = bundle.getInt( DURABILITY );
 		mysticism = bundle.getInt( MYSTICISM );
