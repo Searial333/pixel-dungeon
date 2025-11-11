@@ -4,6 +4,16 @@
 
 This customized version of Pixel Dungeon has been transformed into a full-fledged **EverQuest II roguelike**, bringing the beloved MMORPG's lore, classes, races, and world to the dungeon-crawling experience.
 
+## ⭐ Latest Updates
+
+**Major Content Expansion:**
+- 🔥 **3 Legendary Raid Bosses** - Lady Vox, Lord Trakanon, Venril Sathir
+- ⚔️ **8 New Epic Weapons** - Subclass-specific legendary items
+- 🎯 **9 New Class Abilities** - Expanded ability system for all archetypes
+- 📜 **Heritage Quest System** - Multi-step epic quest chains
+- ⚡ **Alternate Advancement (AA)** - Endgame progression abilities
+- 🧛 **Freeblood Race** - Vampiric neutral race (19 total races now!)
+
 ---
 
 ## 🧙 Character Creation
@@ -138,6 +148,9 @@ Choose a deity to worship and gain powerful blessings:
 ### **Fighter Abilities**
 - **Provoke** - Taunt enemies to attack you (30 stamina)
 - **Berserk Rage** - Increase damage, decrease defense (40 stamina)
+- **Shield Bash** - Stun enemy with your shield (35 stamina) - Guardian
+- **Rampage** - AoE whirlwind attack hitting all adjacent enemies (45 stamina) - Berserker
+- **Lay on Hands** - Emergency self-heal for 50% HP (40 mana, 120s cooldown) - Paladin
 
 ### **Priest Abilities**
 - **Celestial Healing** - Powerful heal (50 mana)
@@ -145,9 +158,15 @@ Choose a deity to worship and gain powerful blessings:
 
 ### **Mage Abilities**
 - **Ice Comet** - Devastating cold damage + slow (60 mana)
+- **Fireball** - Area of effect fire damage (50 mana) - Wizard
+- **Lifetap** - Drain enemy life to heal yourself (25 mana) - Shadowknight/Necromancer
+- **Mesmerize** - Put enemy to sleep with mind magic (35 mana) - Illusionist/Coercer
 
 ### **Scout Abilities**
 - **Backstab** - Massive damage from behind (35 stamina)
+- **Eviscerate** - Devastating finishing move, extra damage vs wounded (50 stamina) - Assassin
+- **Snare** - Root enemy in place (20 mana, 15 stamina) - Ranger
+- **Heroic Anthem** - Buff song that boosts stats (40 mana) - Troubadour
 
 ---
 
@@ -185,11 +204,18 @@ Explore iconic EverQuest II locations:
 - **Captain Slagfist** - Elite orc commander
 - **Emperor Crush** - Orcish warlord ruling Crushbone
 
+### **Raid Bosses** 🔥
+- **Lady Vox** - Ancient ice dragon of Permafrost (500 HP, frost breath, epic loot)
+- **Lord Trakanon** - Undead dragon cursed by Cazic-Thule (600 HP, deadly poison, lifetap)
+- **Venril Sathir** - Iksar lich emperor (450 HP, summons minions, necromancy)
+
 ---
 
 ## ⚔️ Legendary Equipment
 
 ### **Epic Weapons**
+
+**Tier 1 - Legendary Weapons:**
 - **Fiery Avenger** - Paladin sword with fire damage
 - **Innoruuk's Curse** - Shadowknight blade with life drain
 - **Water Sprinkler of Nem Ankh** - Cleric mace
@@ -197,6 +223,16 @@ Explore iconic EverQuest II locations:
 - **Raging Blades** - Berserker paired swords
 - **Staff of Eternal Flame** - Wizard staff (50% burn chance)
 - **Singing Short Sword** - Bard weapon (scales with Presence)
+
+**Tier 2 - Subclass Weapons:** ⭐ NEW!
+- **Blade of Chaos** - Warlock sword with unpredictable chaos damage
+- **Nature's Wrath** - Druid/Warden staff that roots enemies
+- **Ghoulbane** - Cleric/Templar mace with bonus holy damage vs undead
+- **Twin Fangs of the Serpent** - Swashbuckler/Brigand dual daggers with poison
+- **Scythe of Sorrow** - Necromancer scythe with lifetap effect
+- **Mind Blade** - Illusionist/Coercer dagger that confuses enemies
+- **Crimson Tempest** - Assassin dagger that causes severe bleeding
+- **Lute of Enchantment** - Troubadour/Dirge instrument that charms enemies
 
 ### **Armor**
 - **Crafted Mastwork** - Epic plate armor
@@ -300,14 +336,68 @@ Each combination offers a unique playstyle and stat distribution!
 
 ---
 
+## 📜 Heritage Quests ⭐ NEW!
+
+Heritage Quests are EverQuest II's signature multi-step epic quest chains that reward legendary items:
+
+### **The Fiery Avenger**
+- **Reward**: Fiery Avenger (legendary paladin sword)
+- **Steps**:
+  1. Speak with Priest Tomlin in Qeynos
+  2. Collect 10 Red Dragon Scales from Lavastorm
+  3. Defeat Lord Nagafen on Depth 20
+  4. Retrieve the Broken Sword Hilt
+  5. Complete the reforging ritual
+
+### **Innoruuk's Curse**
+- **Reward**: Innoruuk's Curse (shadowknight blade)
+- **Steps**:
+  1. Gain audience with Lucan D'Lere in Freeport
+  2. Prove your darkness through evil deeds
+  3. Find the Unholy Symbol in Crushbone
+  4. Defeat Lord Darish the Fallen
+  5. Perform the Ritual of Hate
+
+### **Staff of Eternal Flame**
+- **Reward**: Staff of Eternal Flame (wizard staff)
+- **Steps**:
+  1. Study with Archmage Theldyn
+  2. Collect 5 Essence of Fire
+  3. Defeat the Fire Drake Matriarch
+  4. Retrieve Solusek's Heartstone
+  5. Complete the Ritual of Flames
+
+---
+
+## ⚡ Alternate Advancement (AA) ⭐ NEW!
+
+Endgame progression system that grants powerful abilities beyond normal leveling:
+
+### **Active AA Abilities**
+- **Perfect Form** (50 AA pts, Lv20) - Maximize all stats and fully restore resources (5min cooldown)
+- **Second Wind** (10 AA pts, Lv10) - Emergency heal when below 30% HP (3min cooldown)
+- **Time Warp** (25 AA pts, Lv15) - Act twice in succession (2min cooldown)
+- **Divine Intervention** (30 AA pts, Lv15) - Prevent death once (10min cooldown)
+
+### **Passive AA Abilities**
+- **Mana Regeneration** (5-25 AA pts, Lv5+) - Increase mana regen by +2 per rank (Max rank 5)
+
+AA Points are earned through heroic deeds and defeating raid bosses!
+
+---
+
 ## 🎮 Gameplay Tips
 
 1. **Race + Deity Synergy**: Combine racial bonuses with deity blessings for massive stat boosts
 2. **Class Abilities**: Use mana/stamina wisely - abilities have cooldowns
 3. **Named Mobs**: Hunt for named enemies - they drop better loot!
-4. **Quest Items**: Collect gnoll fangs, orc belts, and dragon scales
-5. **Zone Progression**: Each zone has unique monsters and difficulty
-6. **Equipment**: Legendary items are rare but incredibly powerful
+4. **Raid Bosses**: Lady Vox, Lord Trakanon, and Venril Sathir drop legendary rewards
+5. **Heritage Quests**: Complete epic quest chains for guaranteed legendary weapons
+6. **Quest Items**: Collect gnoll fangs, orc belts, and dragon scales
+7. **Zone Progression**: Each zone has unique monsters and difficulty
+8. **Equipment**: Legendary items are rare but incredibly powerful
+9. **AA Points**: Save AA points for game-changing abilities like Perfect Form and Time Warp
+10. **Subclass Synergy**: Each subclass now has unique signature abilities
 
 ---
 
