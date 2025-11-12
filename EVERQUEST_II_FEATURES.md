@@ -6,17 +6,20 @@ This customized version of Pixel Dungeon has been transformed into a full-fledge
 
 ## ⭐ Latest Updates
 
-**Complete Class System Overhaul:**
+**Complete Class System + Massive Item Expansion:**
 - ⚔️ **24 Fully Developed Subclasses** - Each with unique abilities and passive traits
 - 🎯 **30+ Class Abilities** - Every subclass has signature active abilities
 - 💎 **Passive Trait System** - Unique bonuses for each subclass
+- 🗡️ **20+ New Themed Items** - Weapons, armor, rings, potions, and food!
+- 🛡️ **5 New Legendary Armor Sets** - Class-specific armor with lore
+- 💍 **5 New Deity Rings** - Divine-powered accessories
+- 🧪 **5 New Consumables** - Mana/stamina potions, elven waybread, dwarven ale
 - 🔥 **3 Legendary Raid Bosses** - Lady Vox, Lord Trakanon, Venril Sathir
-- ⚔️ **15 Epic Weapons** - Subclass-specific legendary items
 - 📜 **Heritage Quest System** - Multi-step epic quest chains
 - ⚡ **Alternate Advancement (AA)** - Endgame progression abilities
 - 🧛 **Freeblood Race** - Vampiric neutral race (19 total races now!)
 
-📖 **See CLASS_ABILITIES_REFERENCE.md for complete ability listings!**
+📖 **See CLASS_ABILITIES_REFERENCE.md for abilities and ITEMS_CATALOG.md for items!**
 
 ---
 
