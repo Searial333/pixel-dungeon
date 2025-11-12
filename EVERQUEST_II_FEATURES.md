@@ -6,13 +6,17 @@ This customized version of Pixel Dungeon has been transformed into a full-fledge
 
 ## ⭐ Latest Updates
 
-**Major Content Expansion:**
+**Complete Class System Overhaul:**
+- ⚔️ **24 Fully Developed Subclasses** - Each with unique abilities and passive traits
+- 🎯 **30+ Class Abilities** - Every subclass has signature active abilities
+- 💎 **Passive Trait System** - Unique bonuses for each subclass
 - 🔥 **3 Legendary Raid Bosses** - Lady Vox, Lord Trakanon, Venril Sathir
-- ⚔️ **8 New Epic Weapons** - Subclass-specific legendary items
-- 🎯 **9 New Class Abilities** - Expanded ability system for all archetypes
+- ⚔️ **15 Epic Weapons** - Subclass-specific legendary items
 - 📜 **Heritage Quest System** - Multi-step epic quest chains
 - ⚡ **Alternate Advancement (AA)** - Endgame progression abilities
 - 🧛 **Freeblood Race** - Vampiric neutral race (19 total races now!)
+
+📖 **See CLASS_ABILITIES_REFERENCE.md for complete ability listings!**
 
 ---
 
@@ -77,45 +81,45 @@ Begin your journey as one of four archetypes:
    - Massive Stamina pool (150)
    - Critical strikes and evasion
 
-### **24 Subclasses**
+### **24 Subclasses** - FULLY DEVELOPED ⭐
 
-At higher levels, specialize into one of 24 subclasses:
+At higher levels, specialize into one of 24 subclasses, each with unique abilities and passive traits:
 
 **Fighter Subclasses:**
-- Guardian (defensive tank)
-- Berserker (offensive rage)
-- Monk (evasive martial artist)
-- Bruiser (crowd control brawler)
-- Paladin (holy warrior)
-- Shadowknight (dark knight)
+- **Guardian** - Defensive tank (Provoke, Shield Bash) | Passive: -20% damage taken
+- **Berserker** - Offensive rage (Berserk Rage, Rampage) | Passive: +25-50% damage, scales with missing HP
+- **Monk** - Evasive martial artist (Flying Kick) | Passive: +15% evasion, +15% damage unarmored
+- **Bruiser** - Crowd control brawler (Haymaker) | Passive: +20% damage, increased stun duration
+- **Paladin** - Holy warrior (Lay on Hands, Shield Bash) | Passive: +10% vs undead, -10% damage taken
+- **Shadowknight** - Dark knight (Lifetap, Harm Touch) | Passive: +15% damage, 5% lifesteal
 
 **Priest Subclasses:**
-- Cleric (main healer)
-- Druid (nature magic)
-- Shaman (spirit caller)
-- Templar (armored healer)
-- Inquisitor (offensive healer)
-- Warden (HoT specialist)
-- Fury (offensive druid)
-- Defiler (plague shaman)
-- Mystic (ward specialist)
+- **Cleric** - Main healer (Group Heal, Celestial Healing) | Passive: +20% healing power
+- **Druid** - Nature magic (Thorncoat, Regrowth) | Passive: +15% nature damage, +10% HoTs
+- **Shaman** - Spirit caller (Spirit Totem) | Passive: +15% buff/debuff duration
+- **Templar** - Armored healer (Reactive Heal, Group Heal) | Passive: -10% damage, +15% reactive healing
+- **Inquisitor** - Offensive healer (Smite Evil, Celestial Healing) | Passive: +25% vs undead
+- **Warden** - HoT specialist (Regrowth, Thorncoat) | Passive: +25% HoT potency
+- **Fury** - Offensive druid (Tempest) | Passive: +20% elemental damage
+- **Defiler** - Plague shaman (Plague, Spirit Totem) | Passive: +20% DoT damage
+- **Mystic** - Ward specialist (Mystic Ward) | Passive: +20% ward strength
 
 **Mage Subclasses:**
-- Wizard (elemental destruction)
-- Warlock (chaos magic)
-- Sorcerer (versatile caster)
-- Summoner (pet master)
-- Necromancer (death magic)
-- Illusionist (crowd control)
-- Coercer (mind control)
+- **Wizard** - Elemental destruction (Fireball, Ice Comet, Arcane Barrage) | Passive: +30% elemental damage
+- **Warlock** - Chaos magic (Chaos Blast) | Passive: Chaos effects, +50% damage variance
+- **Sorcerer** - Versatile caster (Arcane Barrage, Fireball) | Passive: +15% spell damage, +2 mana regen
+- **Summoner** - Pet master (Summon Elemental) | Passive: +50% pet damage/HP
+- **Necromancer** - Death magic (Lifetap, Raise Dead) | Passive: +15% DoT, undead control
+- **Illusionist** - Crowd control (Mesmerize, Mind Control) | Passive: +50% CC duration
+- **Coercer** - Mind domination (Mesmerize, Mind Control) | Passive: +50% charm duration
 
 **Scout Subclasses:**
-- Swashbuckler (dual-wield fighter)
-- Brigand (poison specialist)
-- Assassin (stealth killer)
-- Ranger (archer with pet)
-- Troubadour (buff bard)
-- Dirge (debuff bard)
+- **Swashbuckler** - Dual-wield fighter (Riposte, Backstab) | Passive: +20% dual wield, +10% crit
+- **Brigand** - Poison specialist (Poisoned Blades, Backstab) | Passive: Poison on attacks, +5% crit
+- **Assassin** - Stealth killer (Backstab, Eviscerate) | Passive: +50% backstab, +15% crit
+- **Ranger** - Archer with pet (Snare, Pet Attack) | Passive: +25% ranged damage, pet companion
+- **Troubadour** - Buff bard (Heroic Anthem) | Passive: +20% buff potency, +15% Presence
+- **Dirge** - Debuff bard (Song of Death) | Passive: +20% debuff potency, −15% enemy damage
 
 ---
 
