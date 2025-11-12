@@ -237,32 +237,30 @@ public class Generator {
 	}
 	
 	public static Armor randomArmor() throws Exception {
-		
+
+		// Use the new procedural generation system
+		int depth = Dungeon.depth > 0 ? Dungeon.depth : 1;
+
+		// Generate two procedural armors and pick the one closer to hero's STR
 		int curStr = Hero.STARTING_STR + Dungeon.potionOfStrength;
-		
-		Category cat = Category.ARMOR;
-		
-		Armor a1 = (Armor)cat.classes[Random.chances( cat.probs )].newInstance();
-		Armor a2 = (Armor)cat.classes[Random.chances( cat.probs )].newInstance();
-		
-		a1.random();
-		a2.random();
-		
+
+		Armor a1 = ItemFactory.generateProceduralArmor(depth);
+		Armor a2 = ItemFactory.generateProceduralArmor(depth);
+
 		return Math.abs( curStr - a1.STR ) < Math.abs( curStr - a2.STR ) ? a1 : a2;
 	}
-	
+
 	public static Weapon randomWeapon() throws Exception {
-		
+
+		// Use the new procedural generation system
+		int depth = Dungeon.depth > 0 ? Dungeon.depth : 1;
+
+		// Generate two procedural weapons and pick the one closer to hero's STR
 		int curStr = Hero.STARTING_STR + Dungeon.potionOfStrength;
-		
-		Category cat = Category.WEAPON;
-		
-		Weapon w1 = (Weapon)cat.classes[Random.chances( cat.probs )].newInstance();
-		Weapon w2 = (Weapon)cat.classes[Random.chances( cat.probs )].newInstance();
-		
-		w1.random();
-		w2.random();
-		
+
+		Weapon w1 = ItemFactory.generateProceduralWeapon(depth);
+		Weapon w2 = ItemFactory.generateProceduralWeapon(depth);
+
 		return Math.abs( curStr - w1.STR ) < Math.abs( curStr - w2.STR ) ? w1 : w2;
 	}
 }
